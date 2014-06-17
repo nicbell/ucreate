@@ -39,8 +39,8 @@ configuration: Release
 #  - Release
 
 build:
-  project: UCreate.sln			   # path to Visual Studio solution or project
-  publish_wap: false			   # package Web Application Projects (WAP) for Web Deploy
+  project: UCreate.sln             # path to Visual Studio solution or project
+  publish_wap: false               # package Web Application Projects (WAP) for Web Deploy
   publish_wap_xcopy: false         # package Web Application Projects (WAP) for XCopy deployment
   publish_azure: false             # package Azure Cloud Service projects and push to artifacts
   publish_nuget: false             # package projects with .nuspec files and push to artifacts
