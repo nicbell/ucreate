@@ -7,12 +7,11 @@
     <projectUrl>https://github.com/nicbell/ucreate</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Umbraco code first things</description>
-    <summary>Umbraco code first things</summary>
     <copyright>Nic Bell</copyright>
     <language>en-GB</language>
     <tags>C#,Umbraco</tags>
+    <dependencies>
+      <dependency id="UmbracoCms.Core" version="7.1.4" />
+    </dependencies>
   </metadata>
-  <dependencies>
-    <dependency id="UmbracoCms.Core" version="7.1.4" />
-  </dependencies>
 </package>
