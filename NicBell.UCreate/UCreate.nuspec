@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>UCreate</id>
+    <version>0.0.1</version>
+    <authors>Nic Bell</authors>
+    <projectUrl>https://github.com/nicbell/ucreate</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Umbraco code first things</description>
+    <summary>Umbraco code first things</summary>
+    <copyright>Nic Bell</copyright>
+    <language>en-GB</language>
+    <tags>C#,Umbraco</tags>
+  </metadata>
+  <dependencies>
+    <dependency id="UmbracoCms.Core" version="7.1.4" />
+  </dependencies>
+</package>

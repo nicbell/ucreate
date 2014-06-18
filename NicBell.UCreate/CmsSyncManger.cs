@@ -89,7 +89,7 @@ namespace NicBell.UCreate
 
         public static IEnumerable<Type> GetAllItemsToSync()
         {
-            var allTypes = Assembly.GetCallingAssembly().GetTypes();
+            var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes());
 
             var items = new List<KeyValuePair<int, Type>>();
 
