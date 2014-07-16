@@ -65,23 +65,9 @@ namespace NicBell.UCreate
                 }
 
                 //Media type
-                if (item.IsSubclassOf(typeof(CustomMediaTypeBase)))
+                if (item.GetCustomAttribute<CustomMediaTypeAttribute>() != null)
                 {
-                    var attr = Attribute.GetCustomAttributes(item).FirstOrDefault(x => x is CustomMediaTypeAttribute) as CustomMediaTypeAttribute;
-                    var mt = new MediaType(-1)
-                    {
-                        Key = new Guid(attr.Key),
-                        Name = attr.Name,
-                        Alias = attr.Alias,
-                        Icon = attr.Icon,
-                        AllowedAsRoot = attr.AllowedAsRoot,
-                        IsContainer = attr.IsContainer
-                    };
-                    var instance = Activator.CreateInstance(item, null) as CustomMediaTypeBase;
-
-                    instance.PreAdd();
-                    mtSync.Save(mt, instance.Properties, attr.Overwrite);
-                    instance.PostAdd();
+                    mtSync.Save(item);
                 }
             }
         }

@@ -56,3 +56,21 @@ public class NiceColorPicker : CustomDataTypeBase
     }
 }
 ```
+
+MediaType Example
+---
+```csharp
+[CustomMediaType(SyncOrder = 2,
+    Name = "Folder With Cover",
+    Alias = "FolderWithCover",
+    Key = "f188043d-62c5-40f5-b1b0-a4a83b21a902",
+    Icon = "icon-folder color-blue",
+    AllowedAsRoot = true,
+    IsContainer = true,
+    AllowedTypes = new[] { "FolderWithCover", "Image" })]
+public class FolderWithCover
+{
+    [CustomTypeProperty(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]
+    public string CoverImage { get; set; }
+}
+```

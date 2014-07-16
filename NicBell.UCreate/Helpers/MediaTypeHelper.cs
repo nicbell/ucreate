@@ -1,6 +1,8 @@
-﻿using System;
+﻿using NicBell.UCreate.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
@@ -24,61 +26,29 @@ namespace NicBell.UCreate.Helpers
         }
 
 
-        public void Save(IMediaType mt, IList<KeyValuePair<string, PropertyType>> properties, bool overwrite = false)
-        {
+        /// <summary>
+        /// Saves
+        /// </summary>
+        /// <param name="itemType"></param>
+        public void Save(Type itemType)
+        {  
             var mediaTypes = Service.GetAllMediaTypes();
+            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is CustomMediaTypeAttribute) as CustomMediaTypeAttribute;
 
-            if (!mediaTypes.Select(x => x.Alias).Contains(mt.Alias))
+            if (!mediaTypes.Any(x => x.Key == new Guid(attr.Key)) || attr.Overwrite)
             {
-                MapAllowedTypesIds(mt);
-                MapProperties(mt, properties);
+                var mt = mediaTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new MediaType(-1) { Key = new Guid(attr.Key) };
+
+                mt.Name = attr.Name;
+                mt.Alias = attr.Alias;
+                mt.Icon = attr.Icon;
+                mt.AllowedAsRoot = attr.AllowedAsRoot;
+                mt.IsContainer = attr.IsContainer;
+
+                MapAllowedTypes(mt, attr.AllowedTypes);
+                MapProperties(mt, itemType, attr.Overwrite);
+
                 Service.Save(mt);
-            }
-            else if (overwrite)
-            {
-                //Item already exists do we fetch it and update it
-                var existingMediaType = mediaTypes.First(x => x.Key == mt.Key);
-
-                MapAllowedTypesIds(mt);
-
-                existingMediaType.Name = mt.Name;
-                existingMediaType.Alias = mt.Alias;
-                existingMediaType.Icon = mt.Icon;
-                existingMediaType.AllowedAsRoot = mt.AllowedAsRoot;
-                existingMediaType.IsContainer = mt.IsContainer;
-                existingMediaType.AllowedContentTypes = mt.AllowedContentTypes;
-
-                MapProperties(existingMediaType, properties);
-
-                Service.Save(existingMediaType);
-            }
-        }
-
-
-        public void Save(IMediaType mt, bool overwrite = false)
-        {
-            var mediaTypes = Service.GetAllMediaTypes();
-
-            if (!mediaTypes.Select(x => x.Alias).Contains(mt.Alias))
-            {
-                MapAllowedTypesIds(mt);
-                Service.Save(mt);
-            }
-            else if (overwrite)
-            {
-                //Item already exists do we fetch it and update it
-                var existingMediaType = mediaTypes.First(x => x.Key == mt.Key);
-
-                MapAllowedTypesIds(mt);
-
-                existingMediaType.Name = mt.Name;
-                existingMediaType.Alias = mt.Alias;
-                existingMediaType.Icon = mt.Icon;
-                existingMediaType.AllowedAsRoot = mt.AllowedAsRoot;
-                existingMediaType.IsContainer = mt.IsContainer;
-                existingMediaType.AllowedContentTypes = mt.AllowedContentTypes;
-
-                Service.Save(existingMediaType);
             }
         }
 
@@ -89,30 +59,44 @@ namespace NicBell.UCreate.Helpers
         }
 
 
-        private void MapAllowedTypesIds(IMediaType mt)
+        private void MapAllowedTypes(IContentTypeBase mt, string[] allowedTypeAliases)
         {
-            if (mt.AllowedContentTypes != null && mt.AllowedContentTypes.Count() > 0)
+            var allowedTypes = new List<ContentTypeSort>();
+
+            foreach (var allowedTypeAlias in allowedTypeAliases)
             {
-                foreach (var act in mt.AllowedContentTypes)
+                allowedTypes.Add(new ContentTypeSort
                 {
-                    act.Id = new Lazy<int>(() => Service.GetMediaType(act.Alias).Id);
-                }
+                    Id = new Lazy<int>(() => Service.GetMediaType(allowedTypeAlias).Id),
+                    Alias = allowedTypeAlias
+                });
             }
+
+            mt.AllowedContentTypes = allowedTypes;
         }
 
 
-        private void MapProperties(IMediaType mt, IList<KeyValuePair<string, PropertyType>> properties)
+        private void MapProperties(IMediaType mt, Type itemType, bool overwrite)
         {
-            var tabNames = properties.Select(x => x.Key).Distinct();
-
-            foreach (var tabName in tabNames)
+            foreach (PropertyInfo propInfo in itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                mt.AddPropertyGroup(tabName);
-            }
+                CustomTypePropertyAttribute propAttr = Attribute.GetCustomAttribute(propInfo, typeof(CustomTypePropertyAttribute), false) as CustomTypePropertyAttribute;
 
-            foreach (var property in properties)
-            {
-                mt.AddPropertyType(property.Value, property.Key);
+                if (propAttr != null)
+                {
+                    if (overwrite)
+                        mt.RemovePropertyType(propAttr.Alias);
+
+                    if (!String.IsNullOrEmpty(propAttr.TabName))
+                    {
+                        mt.AddPropertyGroup(propAttr.TabName);
+                        mt.AddPropertyType(propAttr.GetPropertyType(), propAttr.TabName);
+                    }
+                    else
+                    {
+                        mt.AddPropertyType(propAttr.GetPropertyType());
+                    }
+                }
             }
         }
     }
