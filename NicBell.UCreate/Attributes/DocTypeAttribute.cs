@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NicBell.UCreate.Attributes
 {
-    public class CustomMediaTypeAttribute : OrderdSyncAttribute
+    public class DocTypeAttribute : OrderdSyncAttribute
     {
         public string Name { get; set; }
         public string Key { get; set; }
@@ -20,6 +20,19 @@ namespace NicBell.UCreate.Attributes
         public bool AllowedAsRoot { get; set; }
         public bool IsContainer { get; set; }
 
+        /// <summary>
+        /// Aliases of allowed types
+        /// </summary>
         public string[] AllowedTypes { get; set; }
+
+        /// <summary>
+        /// List of allowed templates
+        /// </summary>
+        public string[] AllowedTemplates { get; set; }
+
+        /// <summary>
+        /// Default template
+        /// </summary>
+        public string DefaultTemplate { get; set; }
     }
 }

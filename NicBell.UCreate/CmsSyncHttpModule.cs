@@ -17,7 +17,6 @@ namespace NicBell.UCreate
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

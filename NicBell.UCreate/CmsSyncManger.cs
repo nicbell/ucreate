@@ -1,6 +1,5 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Helpers;
-using NicBell.UCreate.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,33 +40,28 @@ namespace NicBell.UCreate
         {
             var items = GetAllItemsToSync();
 
-            var dtSync = new DataTypeHelper();
-            var mtSync = new MediaTypeHelper();
-
+            var docSync = new DocTypeHelper();
+            var dataSync = new DataTypeHelper();
+            var mediaSync = new MediaTypeHelper();
 
             foreach (var item in items)
             {
-                //Data type
-                if (item.IsSubclassOf(typeof(CustomDataTypeBase)))
+                //Document type
+                if (item.GetCustomAttribute<DocTypeAttribute>() != null)
                 {
-                    var attr = Attribute.GetCustomAttributes(item).FirstOrDefault(x => x is CustomDataTypeAttribute) as CustomDataTypeAttribute;
-                    var def = new DataTypeDefinition(-1, attr.EditorAlias)
-                    {
-                        Name = attr.Name,
-                        Key = new Guid(attr.Key),
-                        DatabaseType = attr.DBType
-                    };
-                    var instance = Activator.CreateInstance(item, null) as CustomDataTypeBase;
+                    docSync.Save(item);
+                }
 
-                    instance.PreAdd();
-                    dtSync.Save(def, instance.PreValues, attr.Overwrite);
-                    //instance.Postadd();
+                //Data type
+                if (item.GetCustomAttribute<DataTypeAttribute>() != null)
+                {
+                    dataSync.Save(item);
                 }
 
                 //Media type
-                if (item.GetCustomAttribute<CustomMediaTypeAttribute>() != null)
+                if (item.GetCustomAttribute<MediaTypeAttribute>() != null)
                 {
-                    mtSync.Save(item);
+                    mediaSync.Save(item);
                 }
             }
         }

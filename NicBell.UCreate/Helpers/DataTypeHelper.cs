@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using NicBell.UCreate.Attributes;
+using NicBell.UCreate.Interfaces;
+using System;
 using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.Models;
@@ -23,30 +25,36 @@ namespace NicBell.UCreate.Helpers
 
 
         /// <summary>
-        /// Saves DataType to DB
+        /// Saves
         /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="prevalues"></param>
-        /// <param name="overwrite">Overwrite existing DataType</param>
-        public void Save(IDataTypeDefinition dataType, IDictionary<string, PreValue> prevalues, bool overwrite = false)
+        /// <param name="itemType"></param>
+        public void Save(Type itemType)
         {
             var dataTypes = Service.GetAllDataTypeDefinitions();
+            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DataTypeAttribute) as DataTypeAttribute;
 
-            if (!dataTypes.Any(x => x.Key == dataType.Key))
+            if (!dataTypes.Any(x => x.Key == new Guid(attr.Key)) || attr.Overwrite)
             {
-                Service.SaveDataTypeAndPreValues(dataType, prevalues);
-            }
-            else if (overwrite)
-            {
-                //Item already exists do we fetch it and update it
-                var existingDataType = dataTypes.First(x => x.Key == dataType.Key);
-                existingDataType.Name = dataType.Name;
-                existingDataType.PropertyEditorAlias = dataType.PropertyEditorAlias;
-                existingDataType.DatabaseType = dataType.DatabaseType;
+                var instance = Activator.CreateInstance(itemType, null);
+                var dt = dataTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new DataTypeDefinition(-1, attr.EditorAlias) { Key = new Guid(attr.Key) };
 
-                Service.SaveDataTypeAndPreValues(existingDataType, prevalues);
+                dt.Name = attr.Name;
+                dt.DatabaseType = attr.DBType;
+                dt.PropertyEditorAlias = attr.EditorAlias;
+
+                if (instance is IHasPrePostHooks)
+                    ((IHasPrePostHooks)instance).PreAdd();
+
+                if (instance is IHasPreValues)
+                    Service.SaveDataTypeAndPreValues(dt, ((IHasPreValues)instance).PreValues);
+                else
+                    Service.Save(dt);
+
+                if (instance is IHasPrePostHooks)
+                    ((IHasPrePostHooks)instance).PostAdd();
             }
         }
+
 
 
         public IDataTypeDefinition GetDataType(string name)

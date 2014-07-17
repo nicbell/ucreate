@@ -187,17 +187,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\CustomDataTypeAttribute.cs" />
-    <Compile Include="Attributes\CustomMediaTypeAttribute.cs" />
-    <Compile Include="Attributes\CustomTypePropertyAttribute.cs" />
+    <Compile Include="Attributes\DataTypeAttribute.cs" />
+    <Compile Include="Attributes\DocTypeAttribute.cs" />
+    <Compile Include="Attributes\MediaTypeAttribute.cs" />
+    <Compile Include="Attributes\PropertyAttribute.cs" />
     <Compile Include="Attributes\OrderdSyncAttribute.cs" />
     <Compile Include="CmsSyncHttpModule.cs" />
     <Compile Include="CmsSyncManger.cs" />
     <Compile Include="Constants\PropertyTypes.cs" />
+    <Compile Include="Helpers\BaseContentTypeHelper.cs" />
     <Compile Include="Helpers\DataTypeHelper.cs" />
+    <Compile Include="Helpers\DocTypeHelper.cs" />
     <Compile Include="Helpers\MediaTypeHelper.cs" />
+    <Compile Include="Interfaces\IHasPrePostHooks.cs" />
+    <Compile Include="Interfaces\IHasPrevalues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\CustomDataTypeBase.cs" />
+    <Compile Include="Web\ModelMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
