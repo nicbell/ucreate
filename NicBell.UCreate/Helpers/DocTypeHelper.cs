@@ -1,4 +1,5 @@
 ﻿using NicBell.UCreate.Attributes;
+using NicBell.UCreate.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace NicBell.UCreate.Helpers
 
             if (!contentTypes.Any(x => x.Key == new Guid(attr.Key)) || attr.Overwrite)
             {
+                var instance = Activator.CreateInstance(itemType, null);
                 var ct = contentTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new ContentType(-1) { Key = new Guid(attr.Key) };
 
                 ct.Name = attr.Name;
@@ -35,7 +37,14 @@ namespace NicBell.UCreate.Helpers
                 MapAllowedTypes(ct, attr.AllowedTypes);
                 MapProperties(ct, itemType, attr.Overwrite);
 
+
+                if (instance is IHasPrePostHooks)
+                    ((IHasPrePostHooks)instance).PreAdd();
+
                 Service.Save(ct);
+
+                if (instance is IHasPrePostHooks)
+                    ((IHasPrePostHooks)instance).PostAdd();
             }
         }
 
