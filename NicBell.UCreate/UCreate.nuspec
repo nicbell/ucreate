@@ -2,11 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>UCreate</id>
-    <version>0.0.2</version>
+    <title>UCreate</title>
+    <version>0.0.3</version>
     <authors>Nic Bell</authors>
     <projectUrl>https://github.com/nicbell/ucreate</projectUrl>
+    <licenseUrl>https://github.com/nicbell/ucreate/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Umbraco code first things</description>
+    <description>Create DocTypes, DataTypes and MediaTypes for Umbraco 7 using code-first approach.</description>
     <copyright>Nic Bell</copyright>
     <language>en-GB</language>
     <tags>C#,Umbraco</tags>
