@@ -32,7 +32,9 @@ namespace NicBell.UCreate.Helpers
                 ct.Icon = attr.Icon;
                 ct.AllowedAsRoot = attr.AllowedAsRoot;
                 ct.IsContainer = attr.IsContainer;
+                ct.ParentId = -1;
 
+                SetParent(ct, itemType);
                 SetTemplates(ct, attr.AllowedTemplates, attr.DefaultTemplate);
                 MapAllowedTypes(ct, attr.AllowedTypes);
                 MapProperties(ct, itemType, attr.Overwrite);
@@ -45,6 +47,23 @@ namespace NicBell.UCreate.Helpers
 
                 if (instance is IHasPrePostHooks)
                     ((IHasPrePostHooks)instance).PostAdd();
+            }
+        }
+
+
+        /// <summary>
+        /// Sets parent ID
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="ct"></param>
+        private void SetParent(IContentTypeComposition ct, Type itemType)
+        {
+            var parentAttr = Attribute.GetCustomAttributes(itemType.BaseType).FirstOrDefault(x => x is DocTypeAttribute) as DocTypeAttribute;
+
+            if (parentAttr != null)
+            {
+                ct.SetLazyParentId(new Lazy<int>(() => GetByAlias(parentAttr.Alias).Id));
+                ct.AddContentType(GetByAlias(parentAttr.Alias));
             }
         }
 
@@ -77,7 +96,7 @@ namespace NicBell.UCreate.Helpers
         }
 
 
-        public override IContentTypeBase GetByAlias(string alias)
+        public override IContentTypeComposition GetByAlias(string alias)
         {
             return Service.GetContentType(alias);
         }

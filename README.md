@@ -53,7 +53,7 @@ public class PageWithTitle
 DataType with prevalues example
 ---
 ```csharp
-[DataType(EditorAlias = "Umbraco.ColorPickerAlias",
+[DataType(EditorAlias = Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias,
     Name = "Nice Color Picker",
     Key = "1bfca1e7-95d0-485e-bd94-9fe9c2b8821f",
     DBType = DataTypeDatabaseType.Nvarchar)]

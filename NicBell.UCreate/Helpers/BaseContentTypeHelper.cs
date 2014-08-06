@@ -22,12 +22,12 @@ namespace NicBell.UCreate.Helpers
         }
 
 
-        public abstract IContentTypeBase GetByAlias(string alias);
+        public abstract IContentTypeComposition GetByAlias(string alias);
 
 
         protected void MapProperties(IContentTypeBase mt, Type itemType, bool overwrite)
         {
-            foreach (PropertyInfo propInfo in itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            foreach (PropertyInfo propInfo in itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
                 PropertyAttribute propAttr = Attribute.GetCustomAttribute(propInfo, typeof(PropertyAttribute), false) as PropertyAttribute;
 

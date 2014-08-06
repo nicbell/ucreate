@@ -31,6 +31,7 @@ namespace NicBell.UCreate.Helpers
                 mt.AllowedAsRoot = attr.AllowedAsRoot;
                 mt.IsContainer = attr.IsContainer;
 
+                SetParent(mt, itemType);
                 MapAllowedTypes(mt, attr.AllowedTypes);
                 MapProperties(mt, itemType, attr.Overwrite);
 
@@ -45,7 +46,24 @@ namespace NicBell.UCreate.Helpers
         }
 
 
-        public override IContentTypeBase GetByAlias(string alias)
+        /// <summary>
+        /// Sets parent ID
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="ct"></param>
+        private void SetParent(IContentTypeComposition ct, Type itemType)
+        {
+            var parentAttr = Attribute.GetCustomAttributes(itemType.BaseType).FirstOrDefault(x => x is MediaTypeAttribute) as MediaTypeAttribute;
+
+            if (parentAttr != null)
+            {
+                ct.SetLazyParentId(new Lazy<int>(() => GetByAlias(parentAttr.Alias).Id));
+                ct.AddContentType(GetByAlias(parentAttr.Alias));
+            }
+        }
+
+
+        public override IContentTypeComposition GetByAlias(string alias)
         {
             return Service.GetMediaType(alias);
         }
