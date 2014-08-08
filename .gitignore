@@ -7,3 +7,7 @@ ExamineIndexes/
 
 # Ignore Umbraco content cache file
 umbraco.config
+NicBell.UCreate.Test/
+NicBell.UCreate/bin
+NicBell.UCreate/obj
+packages/*/*
