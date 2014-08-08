@@ -52,23 +52,6 @@ namespace NicBell.UCreate.Helpers
 
 
         /// <summary>
-        /// Sets parent ID
-        /// </summary>
-        /// <param name="itemType"></param>
-        /// <param name="ct"></param>
-        private void SetParent(IContentTypeComposition ct, Type itemType)
-        {
-            var parentAttr = Attribute.GetCustomAttributes(itemType.BaseType).FirstOrDefault(x => x is DocTypeAttribute) as DocTypeAttribute;
-
-            if (parentAttr != null)
-            {
-                ct.SetLazyParentId(new Lazy<int>(() => GetByAlias(parentAttr.Alias).Id));
-                ct.AddContentType(GetByAlias(parentAttr.Alias));
-            }
-        }
-
-
-        /// <summary>
         /// Set templates
         /// </summary>
         /// <param name="ct"></param>

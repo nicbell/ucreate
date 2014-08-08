@@ -80,9 +80,9 @@ namespace NicBell.UCreate
                 // Displaying output. 
                 foreach (Attribute attr in attrs)
                 {
-                    if (attr is OrderdSyncAttribute)
+                    if (attr is BaseTypeAttribute)
                     {
-                        items.Add(new KeyValuePair<int, Type>(((OrderdSyncAttribute)attr).SyncOrder, t));
+                        items.Add(new KeyValuePair<int, Type>(((BaseTypeAttribute)attr).SyncOrder, t));
                     }
                 }
             }

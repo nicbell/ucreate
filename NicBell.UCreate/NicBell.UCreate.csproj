@@ -187,11 +187,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\BaseContentTypeAttribute.cs" />
     <Compile Include="Attributes\DataTypeAttribute.cs" />
     <Compile Include="Attributes\DocTypeAttribute.cs" />
     <Compile Include="Attributes\MediaTypeAttribute.cs" />
     <Compile Include="Attributes\PropertyAttribute.cs" />
-    <Compile Include="Attributes\OrderdSyncAttribute.cs" />
+    <Compile Include="Attributes\BaseTypeAttribute.cs" />
     <Compile Include="CmsSyncHttpModule.cs" />
     <Compile Include="CmsSyncManger.cs" />
     <Compile Include="Constants\PropertyTypes.cs" />

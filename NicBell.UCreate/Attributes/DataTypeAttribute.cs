@@ -2,10 +2,10 @@
 
 namespace NicBell.UCreate.Attributes
 {
-    public class DataTypeAttribute : OrderdSyncAttribute
+    public class DataTypeAttribute : BaseTypeAttribute
     {
         /// <summary>
-        /// Editor Alias, eg: "Umbraco.ColorPickerAlias"
+        /// Editor Alias, eg: Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias
         /// </summary>
         public string EditorAlias { get; set; }
 

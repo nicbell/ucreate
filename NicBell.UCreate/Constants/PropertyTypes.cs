@@ -13,13 +13,13 @@ namespace NicBell.UCreate.Constants
         public const string ContentPicker = "Content Picker";
         public const string DatePickerwithtime = "Date Picker with time";
         public const string DatePicker = "Date Picker";
-        public const string Dropdownmultiple = " Dropdown multiple";
+        public const string Dropdownmultiple = "Dropdown multiple";
         public const string Dropdown = "Dropdown";
         public const string FolderBrowser = "Folder Browser";
         public const string Label = "Label";
         public const string MediaPicker = "Media Picker";
         public const string MemberPicker = "Member Picker";
-        public const string MultipleMediaPicker = " Multiple Media Picker";
+        public const string MultipleMediaPicker = "Multiple Media Picker";
         public const string Numeric = "Numeric";
         public const string Radiobox = "Radiobox";
         public const string RelatedLinks = "Related Links";

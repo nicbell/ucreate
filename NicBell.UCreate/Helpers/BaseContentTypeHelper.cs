@@ -1,6 +1,7 @@
 ﻿using NicBell.UCreate.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Models;
@@ -25,7 +26,13 @@ namespace NicBell.UCreate.Helpers
         public abstract IContentTypeComposition GetByAlias(string alias);
 
 
-        protected void MapProperties(IContentTypeBase mt, Type itemType, bool overwrite)
+        /// <summary>
+        /// Maps properties
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <param name="itemType"></param>
+        /// <param name="overwrite"></param>
+        protected void MapProperties(IContentTypeBase ct, Type itemType, bool overwrite)
         {
             foreach (PropertyInfo propInfo in itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
@@ -34,23 +41,28 @@ namespace NicBell.UCreate.Helpers
                 if (propAttr != null)
                 {
                     if (overwrite)
-                        mt.RemovePropertyType(propAttr.Alias);
+                        ct.RemovePropertyType(propAttr.Alias);
 
                     if (!String.IsNullOrEmpty(propAttr.TabName))
                     {
-                        mt.AddPropertyGroup(propAttr.TabName);
-                        mt.AddPropertyType(propAttr.GetPropertyType(), propAttr.TabName);
+                        ct.AddPropertyGroup(propAttr.TabName);
+                        ct.AddPropertyType(propAttr.GetPropertyType(), propAttr.TabName);
                     }
                     else
                     {
-                        mt.AddPropertyType(propAttr.GetPropertyType());
+                        ct.AddPropertyType(propAttr.GetPropertyType());
                     }
                 }
             }
         }
 
 
-        protected void MapAllowedTypes(IContentTypeBase mt, string[] allowedTypeAliases)
+        /// <summary>
+        /// Maps allowed children
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <param name="allowedTypeAliases"></param>
+        protected void MapAllowedTypes(IContentTypeBase ct, string[] allowedTypeAliases)
         {
             if (allowedTypeAliases == null || allowedTypeAliases.Length == 0)
                 return;
@@ -66,7 +78,24 @@ namespace NicBell.UCreate.Helpers
                 });
             }
 
-            mt.AllowedContentTypes = allowedTypes;
+            ct.AllowedContentTypes = allowedTypes;
+        }
+
+
+        /// <summary>
+        /// Sets parent ID for content type inheritance
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="ct"></param>
+        protected void SetParent(IContentTypeComposition ct, Type itemType)
+        {
+            var parentAttr = Attribute.GetCustomAttributes(itemType.BaseType).FirstOrDefault(x => x is BaseContentTypeAttribute) as BaseContentTypeAttribute;
+
+            if (parentAttr != null)
+            {
+                ct.SetLazyParentId(new Lazy<int>(() => GetByAlias(parentAttr.Alias).Id));
+                ct.AddContentType(GetByAlias(parentAttr.Alias));
+            }
         }
     }
 }
