@@ -26,11 +26,36 @@ namespace NicBell.UCreate.Web
 
                 if (propAttr != null)
                 {
-                    property.SetValue(model, Convert.ChangeType(content.GetProperty(propAttr.Alias).Value, property.PropertyType));
+                    if (propAttr.TypeConverter == null)
+                    {
+                        property.SetValue(model, Convert.ChangeType(content.GetProperty(propAttr.Alias).Value, property.PropertyType));
+                    }
+                    else
+                    {
+                        var converter = Activator.CreateInstance(propAttr.TypeConverter, null);
+
+                        if (converter is ITypeConverter)
+                        {
+                            property.SetValue(model, (converter as ITypeConverter).Convert(content.GetProperty(propAttr.Alias).Value));
+                        }
+                        else
+                        {
+                            throw new Exception("Converter must implement: ITypeConverter");
+                        }
+                    }
                 }
             }
 
             return model;
         }
+    }
+
+
+    /// <summary>
+    /// Interface for converters
+    /// </summary>
+    public interface ITypeConverter
+    {
+        object Convert(object value);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NicBell.UCreate.Helpers;
+using NicBell.UCreate.Interfaces;
 using System;
 using System.Runtime.CompilerServices;
 using Umbraco.Core.Models;
@@ -22,9 +23,14 @@ namespace NicBell.UCreate.Attributes
         /// Property Type. Tip: for standard types use constants in "NicBell.UCreate.Constants.PropertyTypes"
         /// </summary>
         public string TypeName { get; set; }
+
+        /// <summary>
+        /// If you want to convert the stored value to a custom type
+        /// </summary>
+        public Type TypeConverter { get; set; }
         public string TabName { get; set; }
 
-
+        
         /// <summary>
         /// Set default values
         /// </summary>
@@ -37,6 +43,7 @@ namespace NicBell.UCreate.Attributes
             this.Alias = "";
             this.TypeName = "Textstring";
             this.Name = name;
+            this.TypeConverter = null;
         }
 
 
