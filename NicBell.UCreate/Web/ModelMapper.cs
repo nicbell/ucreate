@@ -1,5 +1,7 @@
-﻿using NicBell.UCreate.Attributes;
+﻿using Newtonsoft.Json;
+using NicBell.UCreate.Attributes;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Umbraco.Core.Models;
 
@@ -26,21 +28,35 @@ namespace NicBell.UCreate.Web
 
                 if (propAttr != null)
                 {
-                    if (propAttr.TypeConverter == null)
-                    {
-                        property.SetValue(model, Convert.ChangeType(content.GetProperty(propAttr.Alias).Value, property.PropertyType));
-                    }
-                    else
+                    var value = content.GetProperty(propAttr.Alias).Value;
+
+                    //Convert custom type
+                    if (propAttr.TypeConverter != null)
                     {
                         var converter = Activator.CreateInstance(propAttr.TypeConverter, null);
 
                         if (converter is ITypeConverter)
                         {
-                            property.SetValue(model, (converter as ITypeConverter).Convert(content.GetProperty(propAttr.Alias).Value));
+                            property.SetValue(model, (converter as ITypeConverter).Convert(value));
                         }
                         else
                         {
                             throw new Exception("Converter must implement: ITypeConverter");
+                        }
+                    }
+                    else
+                    {
+                        switch (propAttr.TypeName)
+                        {
+                            case Constants.PropertyTypes.RelatedLinks:
+                                property.SetValue(model, JsonConvert.DeserializeObject<List<RelatedLink>>(value.ToString()));
+                                break;
+                            case Constants.PropertyTypes.Richtexteditor:
+                            case Constants.PropertyTypes.Textboxmultiple:
+                            case Constants.PropertyTypes.Textstring:
+                            default:
+                                property.SetValue(model, Convert.ChangeType(value, property.PropertyType));
+                                break;
                         }
                     }
                 }

@@ -204,6 +204,7 @@
     <Compile Include="Interfaces\IHasPrevalues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\ModelMapper.cs" />
+    <Compile Include="Web\RelatedLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
