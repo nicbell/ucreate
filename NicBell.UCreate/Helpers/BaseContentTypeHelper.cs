@@ -84,16 +84,34 @@ namespace NicBell.UCreate.Helpers
 
                 if (propAttr != null)
                 {
-                    ct.RemovePropertyType(propAttr.Alias);
+                    var newProp = propAttr.GetPropertyType();
 
-                    if (!String.IsNullOrEmpty(propAttr.TabName))
+                    if (ct.PropertyTypeExists(propAttr.Alias))
                     {
-                        ct.AddPropertyGroup(propAttr.TabName);
-                        ct.AddPropertyType(propAttr.GetPropertyType(), propAttr.TabName);
+                        var existingProp = ct.PropertyTypes.First(x => x.Alias == propAttr.Alias);
+
+                        existingProp.DataTypeDefinitionId = newProp.DataTypeDefinitionId;
+                        existingProp.Name = newProp.Name;
+                        existingProp.Description = newProp.Description;
+                        existingProp.Mandatory = newProp.Mandatory;
+                        existingProp.ValidationRegExp = newProp.ValidationRegExp;
+
+                        if (!String.IsNullOrEmpty(propAttr.TabName))
+                        {
+                            ct.MovePropertyType(propAttr.Alias, propAttr.TabName);
+                        }
                     }
                     else
                     {
-                        ct.AddPropertyType(propAttr.GetPropertyType());
+                        if (!String.IsNullOrEmpty(propAttr.TabName))
+                        {
+                            ct.AddPropertyGroup(propAttr.TabName);
+                            ct.AddPropertyType(newProp, propAttr.TabName);
+                        }
+                        else
+                        {
+                            ct.AddPropertyType(newProp);
+                        }
                     }
                 }
             }
