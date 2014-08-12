@@ -65,8 +65,12 @@ namespace NicBell.UCreate.Helpers
         /// <param name="attr"></param>
         private void SetTemplates(IContentType ct, string[] allowedTemplates, string defaultTemplate)
         {
-            if (allowedTemplates == null || allowedTemplates.Length == 0 || String.IsNullOrEmpty(defaultTemplate))
+            if (allowedTemplates == null || allowedTemplates.Length == 0)
                 return;
+
+            if (String.IsNullOrEmpty(defaultTemplate))
+                defaultTemplate = allowedTemplates.First();
+
 
             var templates = new List<ITemplate>();
 
