@@ -13,7 +13,7 @@ namespace NicBell.UCreate.Attributes
     public class PropertyAttribute : Attribute
     {
         public string Alias { get; set; }
-        public string Name { get;  private set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public bool Mandatory { get; set; }
         public string ValidationRegExp { get; set; }
