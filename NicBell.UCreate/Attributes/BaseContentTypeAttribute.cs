@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NicBell.UCreate.Attributes
 {
-    public abstract class BaseContentTypeAttribute : BaseTypeAttribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public abstract class BaseContentTypeAttribute : Attribute
     {
         public string Name { get; set; }
         public string Key { get; set; }

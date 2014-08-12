@@ -1,10 +1,9 @@
-﻿using NicBell.UCreate.Attributes;
-using NicBell.UCreate.Helpers;
+﻿using NicBell.UCreate.Helpers;
+using NicBell.UCreate.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Reflection;
-using Umbraco.Core.Models;
 
 namespace NicBell.UCreate
 {
@@ -21,6 +20,12 @@ namespace NicBell.UCreate
             // avoid immediate locking because it will impact performance
             if (!_synchronized)
             {
+                if (ConfigurationManager.AppSettings["umbracoConfigurationStatus"] != null && String.IsNullOrEmpty(ConfigurationManager.AppSettings["umbracoConfigurationStatus"]))
+                    return;
+
+                if (ConfigurationManager.AppSettings["UCreateDisabled"] != null && Convert.ToBoolean(ConfigurationManager.AppSettings["UCreateDisabled"]))
+                    return;
+
                 lock (_syncObj)
                 {
                     if (!_synchronized)
@@ -38,56 +43,37 @@ namespace NicBell.UCreate
         /// </summary>
         public static void Synchronize()
         {
-            var items = GetAllItemsToSync();
-
-            var docSync = new DocTypeHelper();
             var dataSync = new DataTypeHelper();
             var mediaSync = new MediaTypeHelper();
+            var docSync = new DocTypeHelper();
+            
+            //Sync all the types
+            dataSync.SyncAll();
+            mediaSync.SyncAll();
+            docSync.SyncAll();
 
-            foreach (var item in items)
+            //Syncing tasks that user wants to run.
+            var syncTaskTypes = GetTypesThatImplementInterface(typeof(ISyncTask));
+
+            foreach (var syncTaskType in syncTaskTypes)
             {
-                //Document type
-                if (item.GetCustomAttribute<DocTypeAttribute>() != null)
-                {
-                    docSync.Save(item);
-                }
-
-                //Data type
-                if (item.GetCustomAttribute<DataTypeAttribute>() != null)
-                {
-                    dataSync.Save(item);
-                }
-
-                //Media type
-                if (item.GetCustomAttribute<MediaTypeAttribute>() != null)
-                {
-                    mediaSync.Save(item);
-                }
+                var task = Activator.CreateInstance(syncTaskType) as ISyncTask;
+                task.Run();
             }
         }
 
 
-        public static IEnumerable<Type> GetAllItemsToSync()
+        /// <summary>
+        /// Gets all types that implement an interface
+        /// </summary>
+        /// <param name="interfaceType"></param>
+        /// <returns></returns>
+        public static List<Type> GetTypesThatImplementInterface(Type interfaceType)
         {
-            var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes());
-
-            var items = new List<KeyValuePair<int, Type>>();
-
-            foreach (Type t in allTypes)
-            {
-                var attrs = Attribute.GetCustomAttributes(t);
-
-                // Displaying output. 
-                foreach (Attribute attr in attrs)
-                {
-                    if (attr is BaseTypeAttribute)
-                    {
-                        items.Add(new KeyValuePair<int, Type>(((BaseTypeAttribute)attr).SyncOrder, t));
-                    }
-                }
-            }
-
-            return items.OrderBy(x => x.Key).Select(x => x.Value);
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(t => interfaceType.IsAssignableFrom(t) && t.IsClass)
+                .ToList();
         }
     }
 }

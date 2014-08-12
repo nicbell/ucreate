@@ -1,8 +1,10 @@
-﻿using Umbraco.Core.Models;
+﻿using System;
+using Umbraco.Core.Models;
 
 namespace NicBell.UCreate.Attributes
 {
-    public class DataTypeAttribute : BaseTypeAttribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class DataTypeAttribute : Attribute 
     {
         /// <summary>
         /// Editor Alias, eg: Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias

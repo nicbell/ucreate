@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace NicBell.UCreate.Interfaces
 {
-    public interface IHasPrePostHooks
+    public interface ISyncTask
     {
-        void PreAdd();
-        void PostAdd();
+        void Run();
     }
 }

@@ -8,10 +8,8 @@ using Umbraco.Core.Services;
 
 namespace NicBell.UCreate.Helpers
 {
-    public class DataTypeHelper
+    public class DataTypeHelper : BaseTypeHelper<DataTypeAttribute>
     {
-        public DataTypeHelper() { }
-
         /// <summary>
         /// Service
         /// </summary>
@@ -25,6 +23,18 @@ namespace NicBell.UCreate.Helpers
 
 
         /// <summary>
+        /// Syncs a list of datatypes
+        /// </summary>>
+        public override void SyncAll()
+        {
+            foreach (var dataType in TypesToSync)
+            {
+                Save(dataType);
+            }
+        }
+
+
+        /// <summary>
         /// Saves
         /// </summary>
         /// <param name="itemType"></param>
@@ -32,27 +42,17 @@ namespace NicBell.UCreate.Helpers
         {
             var dataTypes = Service.GetAllDataTypeDefinitions();
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DataTypeAttribute) as DataTypeAttribute;
+            var instance = Activator.CreateInstance(itemType, null);
+            var dt = dataTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new DataTypeDefinition(-1, attr.EditorAlias) { Key = new Guid(attr.Key) };
 
-            if (!dataTypes.Any(x => x.Key == new Guid(attr.Key)) || attr.Overwrite)
-            {
-                var instance = Activator.CreateInstance(itemType, null);
-                var dt = dataTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new DataTypeDefinition(-1, attr.EditorAlias) { Key = new Guid(attr.Key) };
+            dt.Name = attr.Name;
+            dt.DatabaseType = attr.DBType;
+            dt.PropertyEditorAlias = attr.EditorAlias;
 
-                dt.Name = attr.Name;
-                dt.DatabaseType = attr.DBType;
-                dt.PropertyEditorAlias = attr.EditorAlias;
-
-                if (instance is IHasPrePostHooks)
-                    ((IHasPrePostHooks)instance).PreAdd();
-
-                if (instance is IHasPreValues)
-                    Service.SaveDataTypeAndPreValues(dt, ((IHasPreValues)instance).PreValues);
-                else
-                    Service.Save(dt);
-
-                if (instance is IHasPrePostHooks)
-                    ((IHasPrePostHooks)instance).PostAdd();
-            }
+            if (instance is IHasPreValues)
+                Service.SaveDataTypeAndPreValues(dt, ((IHasPreValues)instance).PreValues);
+            else
+                Service.Save(dt);
         }
 
 
