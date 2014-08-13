@@ -1,4 +1,5 @@
 ﻿using NicBell.UCreate.Attributes;
+using NicBell.UCreate.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace NicBell.UCreate.Helpers
         /// </summary>
         public override void SyncAll()
         {
-            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(Object));
+            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(Object) || x.BaseType == typeof(BaseDocType));
 
             foreach (var itemType in firstLevelTypes)
             {
@@ -154,8 +155,8 @@ namespace NicBell.UCreate.Helpers
 
             if (parentAttr != null)
             {
-                ct.SetLazyParentId(new Lazy<int>(() => GetByAlias(parentAttr.Alias).Id));
-                ct.AddContentType(GetByAlias(parentAttr.Alias));
+                ct.SetLazyParentId(new Lazy<int>(() => GetByAlias(itemType.BaseType.Name).Id));
+                ct.AddContentType(GetByAlias(itemType.BaseType.Name));
             }
         }
     }

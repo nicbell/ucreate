@@ -24,10 +24,10 @@ namespace NicBell.UCreate.Helpers
         {
             var mediaTypes = Service.GetAllMediaTypes();
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MediaTypeAttribute) as MediaTypeAttribute;
-            var mt = mediaTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new MediaType(-1) { Key = new Guid(attr.Key) };
+            var mt = mediaTypes.FirstOrDefault(x => x.Alias == itemType.Name) ?? new MediaType(-1);
 
             mt.Name = attr.Name;
-            mt.Alias = attr.Alias;
+            mt.Alias = itemType.Name;
             mt.Icon = attr.Icon;
             mt.AllowedAsRoot = attr.AllowedAsRoot;
             mt.IsContainer = attr.IsContainer;
@@ -42,7 +42,7 @@ namespace NicBell.UCreate.Helpers
         public override void SaveAllowedTypes(Type itemType)
         {
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MediaTypeAttribute) as MediaTypeAttribute;
-            var mt = GetByAlias(attr.Alias) as IMediaType;
+            var mt = GetByAlias(itemType.Name) as IMediaType;
 
             MapAllowedTypes(mt, attr.AllowedTypes);
 

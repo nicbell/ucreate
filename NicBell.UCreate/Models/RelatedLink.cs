@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace NicBell.UCreate.Web
+namespace NicBell.UCreate.Models
 {
     public class RelatedLink
     {

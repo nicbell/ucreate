@@ -4,25 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Umbraco.Core.Models;
+using Umbraco.Core.Models.PublishedContent;
 
-namespace NicBell.UCreate.Web
+namespace NicBell.UCreate.Models
 {
-    /// <summary>
-    /// Maps published content to model.
-    /// </summary>
-    public static class ModelMapper
+    public abstract class BaseDocType : PublishedContentModel
     {
-        /// <summary>
-        /// Map IPublishedContent to model
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        public static T Map<T>(this IPublishedContent content) where T : class, new()
+        public BaseDocType(IPublishedContent content)
+            : base(content)
         {
-            T model = new T();
+            SetValues(content);
+        }
 
-            foreach (PropertyInfo property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+
+        /// <summary>
+        /// This is magic
+        /// </summary>
+        /// <param name="content"></param>
+        private void SetValues(IPublishedContent content)
+        {
+            foreach (PropertyInfo property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 PropertyAttribute propAttr = Attribute.GetCustomAttribute(property, typeof(PropertyAttribute), false) as PropertyAttribute;
 
@@ -37,7 +38,7 @@ namespace NicBell.UCreate.Web
 
                         if (converter is ITypeConverter)
                         {
-                            property.SetValue(model, (converter as ITypeConverter).Convert(value));
+                            property.SetValue(this, (converter as ITypeConverter).Convert(value));
                         }
                         else
                         {
@@ -49,20 +50,20 @@ namespace NicBell.UCreate.Web
                         switch (propAttr.TypeName)
                         {
                             case Constants.PropertyTypes.RelatedLinks:
-                                property.SetValue(model, JsonConvert.DeserializeObject<List<RelatedLink>>(value.ToString()));
+                                property.SetValue(this, JsonConvert.DeserializeObject<List<RelatedLink>>(value.ToString()));
                                 break;
                             case Constants.PropertyTypes.Richtexteditor:
                             case Constants.PropertyTypes.Textboxmultiple:
                             case Constants.PropertyTypes.Textstring:
+                                property.SetValue(this, value.ToString());
+                                break;
                             default:
-                                property.SetValue(model, Convert.ChangeType(value, property.PropertyType));
+                                property.SetValue(this, Convert.ChangeType(value, property.PropertyType));
                                 break;
                         }
                     }
                 }
             }
-
-            return model;
         }
     }
 

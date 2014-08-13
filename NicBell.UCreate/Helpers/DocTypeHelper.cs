@@ -26,10 +26,10 @@ namespace NicBell.UCreate.Helpers
         {
             var contentTypes = Service.GetAllContentTypes();
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DocTypeAttribute) as DocTypeAttribute;
-            var ct = contentTypes.FirstOrDefault(x => x.Key == new Guid(attr.Key)) ?? new ContentType(-1) { Key = new Guid(attr.Key) };
+            var ct = contentTypes.FirstOrDefault(x => x.Alias == itemType.Name) ?? new ContentType(-1);
 
             ct.Name = attr.Name;
-            ct.Alias = attr.Alias;
+            ct.Alias = itemType.Name;
             ct.Icon = attr.Icon;
             ct.AllowedAsRoot = attr.AllowedAsRoot;
             ct.IsContainer = attr.IsContainer;
@@ -50,7 +50,7 @@ namespace NicBell.UCreate.Helpers
         public override void SaveAllowedTypes(Type itemType)
         {
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DocTypeAttribute) as DocTypeAttribute;
-            var ct = GetByAlias(attr.Alias) as IContentType;
+            var ct = GetByAlias(itemType.Name) as IContentType;
 
             MapAllowedTypes(ct, attr.AllowedTypes);
 

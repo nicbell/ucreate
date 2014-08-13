@@ -37,13 +37,11 @@ DocType exmple
 ---
 ```csharp
 [DocType(Name = "Page With Title",
-    Alias = "PageWithTitle",
-    Key = "a3a71c44-c3de-406f-948b-28fa8ebaa413",
     Icon = "icon-zip color-blue",
     AllowedAsRoot = true,
     AllowedTemplates = new[] { "PageWithTitle" },
     DefaultTemplate = "PageWithTitle")]
-public class PageWithTitle
+public class PageWithTitle : BaseDocType
 {
     [Property(Alias = "heading", TypeName = PropertyTypes.Textstring, Description = "Heading for page", Mandatory = true, TabName = "Content")]
     public string Heading { get; set; }
@@ -81,8 +79,6 @@ MediaType example
 ---
 ```csharp
 [MediaType(Name = "Folder With Cover",
-    Alias = "FolderWithCover",
-    Key = "f188043d-62c5-40f5-b1b0-a4a83b21a902",
     Icon = "icon-folder color-blue",
     AllowedAsRoot = true,
     IsContainer = true,
@@ -96,29 +92,31 @@ public class FolderWithCover
 
 Using DocTypes on the front-end
 ---
+In order to use your doctypes on the front-end you need to enable the `PublishedContentModel` factory.
+```csharp
+protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
+{
+    var types = PluginManager.Current.ResolveTypes<PublishedContentModel>();
+    var factory = new PublishedContentModelFactory(types);
+    PublishedContentModelFactoryResolver.Current.SetFactory(factory);
+}
+```
+Using the doctypes.
 ```html
-@inherits  UmbracoTemplatePage
-@using NicBell.UCreate.Web
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<NicBell.UCreate.Test.Test.PageWithTitle>
+
 @{
     Layout = null;
 }
 
-@{
-    var mappedContent = Model.Content.Map<NicBell.UCreate.Test.Test.PageWithTitle>();
-}
-
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>PageWithTitle</title>
 </head>
 <body>
-    <div>  
-      @mappedContent.Heading
-    </div>
+    <h1>@Model.Content.Heading</h1>
 </body>
 </html>
 ```

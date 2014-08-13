@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NicBell.UCreate.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public abstract class BaseContentTypeAttribute : Attribute
     {
+        /// <summary>
+        /// Name that user sees
+        /// </summary>
         public string Name { get; set; }
-        public string Key { get; set; }
-        public string Alias { get; set; }
 
         /// <summary>
         /// Umbraco 7 icon name, eg: icon-picture color-blue
