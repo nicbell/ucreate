@@ -94,11 +94,14 @@ Using DocTypes on the front-end
 ---
 In order to use your doctypes on the front-end you need to enable the `PublishedContentModel` factory.
 ```csharp
-protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
+public class ConfigurePublishedContentModelFactory : ApplicationEventHandler
 {
-    var types = PluginManager.Current.ResolveTypes<PublishedContentModel>();
-    var factory = new PublishedContentModelFactory(types);
-    PublishedContentModelFactoryResolver.Current.SetFactory(factory);
+    protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
+    {
+        var types = PluginManager.Current.ResolveTypes<PublishedContentModel>();
+        var factory = new PublishedContentModelFactory(types);
+        PublishedContentModelFactoryResolver.Current.SetFactory(factory);
+    }
 }
 ```
 Using the doctypes.
