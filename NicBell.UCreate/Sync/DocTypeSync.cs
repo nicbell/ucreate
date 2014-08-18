@@ -5,11 +5,11 @@ using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 
-namespace NicBell.UCreate.Helpers
+namespace NicBell.UCreate.Sync
 {
-    public class DocTypeHelper : BaseContentTypeHelper<DocTypeAttribute>
+    public class DocTypeSync : BaseContentTypeSync<DocTypeAttribute>
     {
-        public DocTypeHelper() { }
+        public DocTypeSync() { }
 
 
         public override IContentTypeComposition GetByAlias(string alias)

@@ -6,9 +6,9 @@ using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 
-namespace NicBell.UCreate.Helpers
+namespace NicBell.UCreate.Sync
 {
-    public class DataTypeHelper : BaseTypeHelper<DataTypeAttribute>
+    public class DataTypeSync : BaseTypeSync<DataTypeAttribute>
     {
         /// <summary>
         /// Service

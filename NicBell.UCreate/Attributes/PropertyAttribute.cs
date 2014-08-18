@@ -1,5 +1,4 @@
-﻿using NicBell.UCreate.Helpers;
-using NicBell.UCreate.Interfaces;
+﻿using NicBell.UCreate.Sync;
 using System;
 using System.Runtime.CompilerServices;
 using Umbraco.Core.Models;
@@ -49,7 +48,7 @@ namespace NicBell.UCreate.Attributes
 
         public PropertyType GetPropertyType()
         {
-            var propType = new PropertyType(new DataTypeHelper().GetDataType(TypeName))
+            var propType = new PropertyType(new DataTypeSync().GetDataType(TypeName))
             {
                 Alias = Alias,
                 Name = Name,

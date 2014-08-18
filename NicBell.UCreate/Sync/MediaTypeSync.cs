@@ -3,11 +3,11 @@ using System;
 using System.Linq;
 using Umbraco.Core.Models;
 
-namespace NicBell.UCreate.Helpers
+namespace NicBell.UCreate.Sync
 {
-    public class MediaTypeHelper : BaseContentTypeHelper<MediaTypeAttribute>
+    public class MediaTypeSync : BaseContentTypeSync<MediaTypeAttribute>
     {
-        public MediaTypeHelper() { }
+        public MediaTypeSync() { }
 
 
         public override IContentTypeComposition GetByAlias(string alias)

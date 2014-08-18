@@ -8,9 +8,9 @@ using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 
-namespace NicBell.UCreate.Helpers
+namespace NicBell.UCreate.Sync
 {
-    public abstract class BaseContentTypeHelper<T> : BaseTypeHelper<T> where T : BaseContentTypeAttribute
+    public abstract class BaseContentTypeSync<T> : BaseTypeSync<T> where T : BaseContentTypeAttribute
     {
         /// <summary>
         /// Service
