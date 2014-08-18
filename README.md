@@ -33,7 +33,19 @@ Adding HTTP module to ```web.config```
 </system.webServer>
 ...
 ```
-DocType exmple
+Sync enabling / disabling
+---
+```xml
+...
+<appSettings>
+    ...
+    <add key="UCreateEnabled" value="true" />
+    ...
+</appSettings>
+...
+```
+
+DocType example
 ---
 ```csharp
 [DocType(Name = "Page With Title",
