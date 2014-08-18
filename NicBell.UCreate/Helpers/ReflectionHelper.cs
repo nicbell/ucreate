@@ -46,7 +46,9 @@ namespace NicBell.UCreate.Helpers
         /// <returns></returns>
         public static IEnumerable<Assembly> GetDependentAssemblies(Assembly assembly)
         {
-            return AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetReferencedAssemblies().Select(aRef => aRef.FullName).Contains(assembly.FullName));
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a.ImageRuntimeVersion != "0.0.0.0")
+                .Where(a => a.GetReferencedAssemblies().Select(aRef => aRef.FullName).Contains(assembly.FullName));
         }
     }
 }

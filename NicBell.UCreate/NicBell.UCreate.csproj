@@ -197,6 +197,7 @@
     <Compile Include="CmsSyncManger.cs" />
     <Compile Include="Constants\PropertyTypes.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Helpers\AssemblyVersionHelper.cs" />
     <Compile Include="Sync\BaseContentTypeSync.cs" />
     <Compile Include="Sync\BaseTypeSync.cs" />
     <Compile Include="Sync\DataTypeSync.cs" />
