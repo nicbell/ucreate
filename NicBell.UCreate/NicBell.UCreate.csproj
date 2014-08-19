@@ -193,8 +193,8 @@
     <Compile Include="Attributes\DocTypeAttribute.cs" />
     <Compile Include="Attributes\MediaTypeAttribute.cs" />
     <Compile Include="Attributes\PropertyAttribute.cs" />
-    <Compile Include="CmsSyncHttpModule.cs" />
     <Compile Include="CmsSyncManger.cs" />
+    <Compile Include="ConfigureUCreate.cs" />
     <Compile Include="Constants\PropertyTypes.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\AssemblyVersionHelper.cs" />

@@ -2,7 +2,6 @@
 using NicBell.UCreate.Interfaces;
 using NicBell.UCreate.Sync;
 using System;
-using System.Configuration;
 
 namespace NicBell.UCreate
 {
@@ -21,12 +20,6 @@ namespace NicBell.UCreate
             {
                 lock (_syncObj)
                 {
-                    if (ConfigurationManager.AppSettings["umbracoConfigurationStatus"] != null && String.IsNullOrEmpty(ConfigurationManager.AppSettings["umbracoConfigurationStatus"]))
-                        return;
-
-                    if (ConfigurationManager.AppSettings["UCreateEnabled"] == null || !Convert.ToBoolean(ConfigurationManager.AppSettings["UCreateEnabled"]))
-                        return;
-
                     if (!_synchronized)
                     {
                         if (!AssemblyVersionHelper.IsSynced())

@@ -1,7 +1,7 @@
 UCreate [![Build status](https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q)](https://ci.appveyor.com/project/nicbell/ucreate)
 =======
 
-Create DocTypes, DataTypes and MediaTypes for Umbraco 7 using code-first approach. Inspired by [USiteBuilder](https://github.com/spopovic/uSiteBuilder).
+Create doc types, media types and data types for Umbraco 7 using a code-first approach. Inspired by [USiteBuilder](https://github.com/spopovic/uSiteBuilder).
 
 Available on NuGet
 ---
@@ -12,34 +12,13 @@ PM> Install-Package UCreate
 Usage
 ---
 
-Adding HTTP module to ```web.config```
+The only configuration you'll need to get started is an app setting in your ```web.config```. This tells UCreate to sync your doc types, media types and data types on application start.
 
-```xml
-...
-<system.web>
-	<httpModules>
-		...
-		<add name="CmsSyncHttpModule" type="NicBell.UCreate.CmsSyncHttpModule, NicBell.UCreate" />
-	</httpModules>
-</system.web>
-...
-<system.webServer>
-	...
-	<modules runAllManagedModulesForAllRequests="true">
-		...
-		<add name="CmsSyncHttpModule" type="NicBell.UCreate.CmsSyncHttpModule, NicBell.UCreate" />
-	</modules>
-	...
-</system.webServer>
-...
-```
-Sync enabling / disabling
----
 ```xml
 ...
 <appSettings>
     ...
-    <add key="UCreateEnabled" value="true" />
+    <add key="UCreateSyncEnabled" value="true" />
     ...
 </appSettings>
 ...
@@ -47,6 +26,7 @@ Sync enabling / disabling
 
 DocType example
 ---
+Doc types support property inheritance.
 ```csharp
 [DocType(Name = "Page With Title",
     Icon = "icon-zip color-blue",
@@ -55,8 +35,27 @@ DocType example
     DefaultTemplate = "PageWithTitle")]
 public class PageWithTitle : BaseDocType
 {
+    public PageWithTitle(IPublishedContent content) : base(content)
+    { }
+
     [Property(Alias = "heading", TypeName = PropertyTypes.Textstring, Description = "Heading for page", Mandatory = true, TabName = "Content")]
     public string Heading { get; set; }
+}
+```
+
+MediaType example
+---
+Media types support property inheritance.
+```csharp
+[MediaType(Name = "Folder With Cover",
+    Icon = "icon-folder color-blue",
+    AllowedAsRoot = true,
+    IsContainer = true,
+    AllowedTypes = new[] { "FolderWithCover", "Image" })]
+public class FolderWithCover
+{
+    [Property(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]
+    public string CoverImage { get; set; }
 }
 ```
 
@@ -87,38 +86,21 @@ public class NiceColorPicker : IHasPreValues
 }
 ```
 
-MediaType example
+Strongly typed views
 ---
-```csharp
-[MediaType(Name = "Folder With Cover",
-    Icon = "icon-folder color-blue",
-    AllowedAsRoot = true,
-    IsContainer = true,
-    AllowedTypes = new[] { "FolderWithCover", "Image" })]
-public class FolderWithCover
-{
-    [Property(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]
-    public string CoverImage { get; set; }
-}
+In order to use your doc types on the front-end you need to enable the `PublishedContentModel` factory. UCreate can do this for you if add the following app setting:
+```xml
+...
+<appSettings>
+    ...
+    <add key="UCreatePublishedModelsEnabled" value="true" />
+    ...
+</appSettings>
+...
 ```
-
-Using DocTypes on the front-end
----
-In order to use your doctypes on the front-end you need to enable the `PublishedContentModel` factory.
-```csharp
-public class ConfigurePublishedContentModelFactory : ApplicationEventHandler
-{
-    protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
-    {
-        var types = PluginManager.Current.ResolveTypes<PublishedContentModel>();
-        var factory = new PublishedContentModelFactory(types);
-        PublishedContentModelFactoryResolver.Current.SetFactory(factory);
-    }
-}
-```
-Using the doctypes.
+Then using the doc types in your views is pretty simple.
 ```html
-@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<NicBell.UCreate.Test.Test.PageWithTitle>
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<NicBell.UCreate.Test.DocTypes.PageWithTitle>
 
 @{
     Layout = null;
