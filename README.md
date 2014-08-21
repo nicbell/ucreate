@@ -26,7 +26,7 @@ The only configuration you'll need to get started is an app setting in your ```w
 
 DocType example
 ---
-Doc types support property inheritance.
+Doc types support property inheritance. Here is a list of available [icons](http://nicbell.github.io/ucreate/icons.html).
 ```csharp
 [DocType(Name = "Page With Title",
     Icon = "icon-zip color-blue",
