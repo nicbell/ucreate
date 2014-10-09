@@ -1,0 +1,30 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<NicBell.UCreate.Test.DocumentTypes.SimplePage>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PageWithTitle</title>
+</head>
+<body>
+    <strong>Heading:</strong>
+    <p>@Model.Content.Heading</p>
+    <strong>Theme (showing off the color converter):</strong>
+    <dl>
+        <dt>Red:</dt>
+        <dd>@Model.Content.Theme.R</dd>
+        <dt>Green:</dt>
+        <dd>@Model.Content.Theme.G</dd>
+        <dt>Blue:</dt>
+        <dd>@Model.Content.Theme.B</dd>
+    </dl>
+    <strong>Testing Numbers:</strong>
+    <p>@Model.Content.TestingNumbers</p>
+    <strong>Testing Check:</strong>
+    <p>@Model.Content.TestingCheck</p>
+</body>
+</html>

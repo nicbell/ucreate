@@ -1,6 +1,5 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Interfaces;
-using NicBell.UCreate.Models;
 using System.Collections.Generic;
 using Umbraco.Core.Models;
 

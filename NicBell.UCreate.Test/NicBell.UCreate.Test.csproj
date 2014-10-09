@@ -217,23 +217,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentTypes\ComplexPage.cs" />
+    <Compile Include="DocumentTypes\SimplePage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DocTypes\FolderWithCover.cs" />
-    <Compile Include="DocTypes\NiceColorConverter.cs" />
+    <Compile Include="MediaTypes\FolderWithCover.cs" />
+    <Compile Include="Converters\NiceColorConverter.cs" />
     <Compile Include="DataTypes\NiceColorPicker.cs" />
-    <Compile Include="DocTypes\PageWithTitle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="css\dummy.txt" />
+    <Content Include="config\splashes\booting.aspx" />
+    <Content Include="config\splashes\noNodes.aspx" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="masterpages\dummy.txt" />
     <Content Include="media\dummy.txt" />
     <Content Include="scripts\dummy.txt" />
     <Content Include="usercontrols\dummy.txt" />
@@ -247,11 +248,13 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\packages\created\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Converters\" />
-    <Folder Include="DocumentTypes\" />
+    <Folder Include="css\" />
+    <Folder Include="masterpages\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\MacroPartials\" />
+    <Folder Include="Views\Partials\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -320,7 +323,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\PageWithTitle.cshtml" />
+    <Content Include="App_Data\packages\installed\installedPackages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\access.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Browsers\Form.browser" />
+    <Content Include="App_Browsers\w3cvalidator.browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SimplePage.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

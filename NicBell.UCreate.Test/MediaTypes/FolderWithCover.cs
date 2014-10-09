@@ -1,7 +1,7 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Constants;
 
-namespace NicBell.UCreate.Test.DocTypes
+namespace NicBell.UCreate.Test.MediaTypes
 {
 
     [MediaType(
