@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using NicBell.UCreate.Attributes;
+﻿using NicBell.UCreate.Attributes;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 
@@ -31,48 +31,24 @@ namespace NicBell.UCreate.Models
                 {
                     var value = content.GetProperty(propAttr.Alias).Value;
 
-                    //Convert custom type
-                    if (propAttr.TypeConverter != null)
-                    {
-                        var converter = Activator.CreateInstance(propAttr.TypeConverter, null);
+                    //Custom converter..
+                    var converterAttr = property.GetCustomAttribute<TypeConverterAttribute>();
 
-                        if (converter is ITypeConverter)
-                        {
-                            property.SetValue(this, (converter as ITypeConverter).Convert(value));
-                        }
-                        else
-                        {
-                            throw new Exception("Converter must implement: ITypeConverter");
-                        }
+                    if (converterAttr != null)
+                    {
+                        var converter = Activator.CreateInstance(Type.GetType(converterAttr.ConverterTypeName)) as TypeConverter;
+                        property.SetValue(this, converter.ConvertFrom(value));
                     }
                     else
                     {
-                        switch (propAttr.TypeName)
+                        var convert = value.TryConvertTo(property.PropertyType);
+                        if (convert.Success)
                         {
-                            case Constants.PropertyTypes.RelatedLinks:
-                                property.SetValue(this, JsonConvert.DeserializeObject<List<RelatedLink>>(value.ToString()));
-                                break;
-                            case Constants.PropertyTypes.Richtexteditor:
-                            case Constants.PropertyTypes.Textboxmultiple:
-                            case Constants.PropertyTypes.Textstring:
-                                property.SetValue(this, value.ToString());
-                                break;
-                            default:
-                                property.SetValue(this, Convert.ChangeType(value, property.PropertyType));
-                                break;
+                            property.SetValue(this, convert.Result);
                         }
                     }
                 }
             }
         }
-    }
-
-
-    /// <summary>
-    /// Interface for converters
-    /// </summary>
-    public interface ITypeConverter
-    {
-        object Convert(object value);
     }
 }

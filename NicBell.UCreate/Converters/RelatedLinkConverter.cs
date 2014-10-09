@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 
-namespace NicBell.UCreate.Test.Converters
+namespace NicBell.UCreate.Converters
 {
-    public class NiceColorConverter : TypeConverter
+    public class RelatedLinkConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string) || sourceType == typeof(int))
+            if (sourceType == typeof(string))
                 return true;
 
             return base.CanConvertFrom(context, sourceType);
@@ -18,11 +19,8 @@ namespace NicBell.UCreate.Test.Converters
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string || value is int)
-                return ColorTranslator.FromHtml("#" + value.ToString());
-
-            if (value == null)
-                return Color.Empty;
+            if (value is string)
+                return JsonConvert.DeserializeObject<List<RelatedLink>>(value as string);
 
             return base.ConvertFrom(context, culture, value);
         }

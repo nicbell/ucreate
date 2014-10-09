@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
 
-namespace NicBell.UCreate.Models
+namespace NicBell.UCreate.Converters
 {
     public class RelatedLink
     {

@@ -235,9 +235,6 @@
     <Content Include="config\splashes\noNodes.aspx" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="media\dummy.txt" />
-    <Content Include="scripts\dummy.txt" />
-    <Content Include="usercontrols\dummy.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -252,7 +249,10 @@
     <Folder Include="Controllers\" />
     <Folder Include="css\" />
     <Folder Include="masterpages\" />
+    <Folder Include="media\" />
     <Folder Include="Models\" />
+    <Folder Include="scripts\" />
+    <Folder Include="usercontrols\" />
     <Folder Include="Views\MacroPartials\" />
     <Folder Include="Views\Partials\" />
   </ItemGroup>

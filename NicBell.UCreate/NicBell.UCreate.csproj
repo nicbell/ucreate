@@ -196,6 +196,7 @@
     <Compile Include="CmsSyncManger.cs" />
     <Compile Include="ConfigureUCreate.cs" />
     <Compile Include="Constants\PropertyTypes.cs" />
+    <Compile Include="Converters\RelatedLinkConverter.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\AssemblyVersionHelper.cs" />
     <Compile Include="Sync\BaseContentTypeSync.cs" />
@@ -207,7 +208,7 @@
     <Compile Include="Interfaces\ISyncTask.cs" />
     <Compile Include="Models\BaseDocType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\RelatedLink.cs" />
+    <Compile Include="Converters\RelatedLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

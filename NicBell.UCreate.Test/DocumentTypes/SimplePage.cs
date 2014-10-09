@@ -2,6 +2,7 @@
 using NicBell.UCreate.Constants;
 using NicBell.UCreate.Models;
 using NicBell.UCreate.Test.Converters;
+using System.ComponentModel;
 using System.Drawing;
 using Umbraco.Core.Models;
 
@@ -22,7 +23,8 @@ namespace NicBell.UCreate.Test.DocumentTypes
         [Property(Alias = "heading", TypeName = PropertyTypes.Textstring, Description = "Heading for page", Mandatory = true, TabName = "Content")]
         public string Heading { get; set; }
 
-        [Property(Alias = "theme", TypeName = "Nice Color Picker", TypeConverter = typeof(NiceColorConverter), TabName = "Content")]
+        [TypeConverter(typeof(NiceColorConverter))]
+        [Property(Alias = "theme", TypeName = "Nice Color Picker", TabName = "Content")]
         public Color Theme { get; set; }
 
         [Property(Alias = "testingNumbers", TypeName = PropertyTypes.Numeric, TabName = "Content")]
