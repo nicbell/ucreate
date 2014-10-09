@@ -7,7 +7,11 @@ ExamineIndexes/
 
 # Ignore Umbraco content cache file
 umbraco.config
-NicBell.UCreate.Test/
-NicBell.UCreate/bin
-NicBell.UCreate/obj
+ucreate.json
+**/bin
+**/obj
 packages/*/*
+.sass-cache
+node_modules
+NuGetBackup
+dummy.txt
