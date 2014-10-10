@@ -3,17 +3,18 @@
   <metadata>
     <id>UCreate</id>
     <title>UCreate</title>
-    <version>0.0.12</version>
+    <version>0.0.13</version>
     <authors>Nic Bell</authors>
     <projectUrl>https://github.com/nicbell/ucreate</projectUrl>
     <licenseUrl>https://github.com/nicbell/ucreate/blob/master/LICENSE</licenseUrl>
+    <iconUrl>http://nicbell.net/favicon-196x196.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Create DocTypes, DataTypes and MediaTypes for Umbraco 7 using code-first approach.</description>
     <copyright>Nic Bell</copyright>
     <language>en-GB</language>
     <tags>C#,Umbraco</tags>
     <dependencies>
-      <dependency id="UmbracoCms.Core" version="[7.1.4, 7.2.0)" />
+      <dependency id="UmbracoCms.Core" version="7.1.4" />
     </dependencies>
   </metadata>
 </package>
