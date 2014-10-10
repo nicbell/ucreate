@@ -217,8 +217,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DocumentTypes\ComplexPage.cs" />
-    <Compile Include="DocumentTypes\SimplePage.cs" />
+    <Compile Include="DocumentTypes\Base.cs" />
+    <Compile Include="DocumentTypes\BlogIndex.cs" />
+    <Compile Include="DocumentTypes\BlogItem.cs" />
+    <Compile Include="DocumentTypes\Home.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -333,7 +335,13 @@
     <Content Include="App_Browsers\w3cvalidator.browser" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SimplePage.cshtml" />
+    <Content Include="Views\Home.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BlogItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BlogIndex.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

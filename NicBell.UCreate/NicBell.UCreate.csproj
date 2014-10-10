@@ -196,7 +196,7 @@
     <Compile Include="CmsSyncManger.cs" />
     <Compile Include="ConfigureUCreate.cs" />
     <Compile Include="Constants\PropertyTypes.cs" />
-    <Compile Include="Converters\RelatedLinkConverter.cs" />
+    <Compile Include="Converters\RelatedLinksConverter.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\AssemblyVersionHelper.cs" />
     <Compile Include="Sync\BaseContentTypeSync.cs" />

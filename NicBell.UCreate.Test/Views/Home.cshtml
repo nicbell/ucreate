@@ -1,0 +1,46 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<Home>
+
+@using NicBell.UCreate.Test.DocumentTypes
+
+@{
+    Layout = null;
+}
+
+@{
+    var blogIndex = Model.Content.Children<BlogIndex>().FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.Content.MetaTitle</title>
+</head>
+<body>
+    <nav>
+        @if (blogIndex != null)
+        {
+            <a href="@blogIndex.Url">Blog</a>
+        }
+    </nav>
+    <div style="padding: 10px; background: #CCC">
+        <h4>Some copy</h4>
+        <div>
+            @Html.Raw(Model.Content.SomeCopy)
+        </div>
+        <h4>Some color split into RGB using a custom converter</h4>
+        <ul>
+            <li>@Model.Content.SomeColor.R</li>
+            <li>@Model.Content.SomeColor.G</li>
+            <li>@Model.Content.SomeColor.B</li>
+        </ul>
+        <h4>Some links</h4>
+        <ul>
+            @foreach (var link in Model.Content.SomeLinks)
+            {
+                <li><a href="@link.Link">@link.Caption</a></li>
+            }
+        </ul>
+    </div>
+</body>
+</html>
