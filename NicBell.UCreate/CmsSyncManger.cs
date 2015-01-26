@@ -39,11 +39,15 @@ namespace NicBell.UCreate
             var dataSync = new DataTypeSync();
             var mediaSync = new MediaTypeSync();
             var docSync = new DocTypeSync();
+            var memberSync = new MemberTypeSync();
+            var memberGroupSync = new MemberGroupSync();
 
             //Sync all the types
             dataSync.SyncAll();
             mediaSync.SyncAll();
             docSync.SyncAll();
+            memberSync.SyncAll();
+            memberGroupSync.SyncAll();
 
             //Syncing tasks that user wants to run.
             var syncTaskTypes = ReflectionHelper.GetTypesThatImplementInterface(typeof(ISyncTask));

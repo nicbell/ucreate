@@ -1,7 +1,7 @@
 UCreate [![Build status](https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q)](https://ci.appveyor.com/project/nicbell/ucreate)
 =======
 
-Create doc types, media types and data types for Umbraco 7 using a code-first approach. Inspired by [USiteBuilder](https://github.com/spopovic/uSiteBuilder).
+Create doc types, media types, data types, member types and member groups for Umbraco 7 using a code-first approach. Inspired by [USiteBuilder](https://github.com/spopovic/uSiteBuilder).
 
 Available on NuGet
 ---
@@ -12,7 +12,7 @@ PM> Install-Package UCreate
 Usage
 ---
 
-The only configuration you'll need to get started is an app setting in your ```web.config```. This tells UCreate to sync your doc types, media types and data types on application start.
+The only configuration you'll need to get started is an app setting in your ```web.config```. This tells UCreate to sync your doc types, media types, data types, member types and member groups on application start.
 
 ```xml
 ...
@@ -83,6 +83,32 @@ public class NiceColorPicker : IHasPreValues
             };
         }
     }
+}
+```
+
+MemberType example
+---
+```csharp
+[MemberType(Name = "Employee", Description = "Member who represents an employee", Icon = "icon-user color-green")]
+public class Employee
+{
+    [MemberProperty(Alias = "jobTitle", TypeName = PropertyTypes.Textstring, Description = "Employee's job title", Mandatory = true, TabName = "Job Details", CanEdit = true, ShowOnProfile = true)]
+    public string JobTitle { get; set; }
+
+    [MemberProperty(Alias = "jobDescription", TypeName = PropertyTypes.Textboxmultiple, Description = "Employee's job description", Mandatory = false, TabName = "Job Details", CanEdit = true, ShowOnProfile = false)]
+    public string JobDescription { get; set; }
+
+    [MemberProperty(Alias = "profilePicture", TypeName = PropertyTypes.MediaPicker, Description = "Admin profile picture", Mandatory = false, CanEdit = true, ShowOnProfile = true)]
+    public string ProfilePicture { get; set; }
+}
+```
+
+MemberGroup example
+---
+```csharp
+[MemberGroup(Name = "Staff")]
+public class Staff
+{
 }
 ```
 

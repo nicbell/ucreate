@@ -192,6 +192,9 @@
     <Compile Include="Attributes\DataTypeAttribute.cs" />
     <Compile Include="Attributes\DocTypeAttribute.cs" />
     <Compile Include="Attributes\MediaTypeAttribute.cs" />
+    <Compile Include="Attributes\MemberGroupAttribute.cs" />
+    <Compile Include="Attributes\MemberPropertyAttribute.cs" />
+    <Compile Include="Attributes\MemberTypeAttribute.cs" />
     <Compile Include="Attributes\PropertyAttribute.cs" />
     <Compile Include="CmsSyncManger.cs" />
     <Compile Include="ConfigureUCreate.cs" />
@@ -209,6 +212,8 @@
     <Compile Include="Models\BaseDocType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Converters\RelatedLink.cs" />
+    <Compile Include="Sync\MemberGroupSync.cs" />
+    <Compile Include="Sync\MemberTypeSync.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
