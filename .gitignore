@@ -15,3 +15,8 @@ packages/*/*
 node_modules
 NuGetBackup
 dummy.txt
+
+# Ignore .net user files
+*.suo
+*.user
+*.sln.docstates
