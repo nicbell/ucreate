@@ -7,11 +7,8 @@ using Umbraco.Core.Models;
 
 namespace NicBell.UCreate.Sync
 {
-    public class DocTypeSync : BaseContentTypeSync<DocTypeAttribute>
+    public class DocTypeSync : BaseTreeContentTypeSync<DocTypeAttribute>
     {
-        public DocTypeSync() { }
-
-
         public override IContentTypeComposition GetByAlias(string alias)
         {
             return Service.GetContentType(alias);
@@ -44,22 +41,7 @@ namespace NicBell.UCreate.Sync
 
 
         /// <summary>
-        /// Saves allowed types
-        /// </summary>
-        /// <param name="itemType"></param>
-        public override void SaveAllowedTypes(Type itemType)
-        {
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DocTypeAttribute) as DocTypeAttribute;
-            var ct = GetByAlias(itemType.Name) as IContentType;
-
-            MapAllowedTypes(ct, attr.AllowedTypes);
-
-            Service.Save(ct);
-        }
-
-
-        /// <summary>
-        /// Set templates
+        /// Set templates for doctypes
         /// </summary>
         /// <param name="ct"></param>
         /// <param name="attr"></param>

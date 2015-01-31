@@ -1,14 +1,14 @@
-﻿using System;
+﻿using NicBell.UCreate.Attributes;
+using System;
 using System.Linq;
 using System.Reflection;
-using NicBell.UCreate.Attributes;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 
 namespace NicBell.UCreate.Sync
 {
-    public class MemberTypeSync : BaseTypeSync<MemberTypeAttribute>
+    public class MemberTypeSync : BaseContentTypeSync<MemberTypeAttribute>
     {
         /// <summary>
         /// Service
@@ -21,22 +21,12 @@ namespace NicBell.UCreate.Sync
             }
         }
 
-        /// <summary>
-        /// Syncs a list of membertypes
-        /// </summary>>
-        public override void SyncAll()
-        {
-            foreach (var memeberType in TypesToSync)
-            {
-                Save(memeberType);
-            }
-        }
 
         /// <summary>
         /// Saves
         /// </summary>
         /// <param name="itemType"></param>
-        public void Save(Type itemType)
+        public override void Save(Type itemType)
         {
             var memberTypes = Service.GetAll();
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MemberTypeAttribute) as MemberTypeAttribute;

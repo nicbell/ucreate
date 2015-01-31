@@ -5,11 +5,8 @@ using Umbraco.Core.Models;
 
 namespace NicBell.UCreate.Sync
 {
-    public class MediaTypeSync : BaseContentTypeSync<MediaTypeAttribute>
+    public class MediaTypeSync : BaseTreeContentTypeSync<MediaTypeAttribute>
     {
-        public MediaTypeSync() { }
-
-
         public override IContentTypeComposition GetByAlias(string alias)
         {
             return Service.GetMediaType(alias);
@@ -34,17 +31,6 @@ namespace NicBell.UCreate.Sync
 
             SetParent(mt, itemType);
             MapProperties(mt, itemType);
-
-            Service.Save(mt);
-        }
-
-
-        public override void SaveAllowedTypes(Type itemType)
-        {
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MediaTypeAttribute) as MediaTypeAttribute;
-            var mt = GetByAlias(itemType.Name) as IMediaType;
-
-            MapAllowedTypes(mt, attr.AllowedTypes);
 
             Service.Save(mt);
         }

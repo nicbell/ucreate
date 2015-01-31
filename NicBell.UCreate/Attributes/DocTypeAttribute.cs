@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NicBell.UCreate.Attributes
 {
-    public class DocTypeAttribute : BaseContentTypeAttribute
-    {
+    public class DocTypeAttribute : BaseTreeContentTypeAttribute
+    {        
         /// <summary>
         /// List of allowed templates
         /// </summary>

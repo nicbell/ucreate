@@ -23,22 +23,10 @@ namespace NicBell.UCreate.Sync
 
 
         /// <summary>
-        /// Syncs a list of datatypes
-        /// </summary>>
-        public override void SyncAll()
-        {
-            foreach (var dataType in TypesToSync)
-            {
-                Save(dataType);
-            }
-        }
-
-
-        /// <summary>
         /// Saves
         /// </summary>
         /// <param name="itemType"></param>
-        public void Save(Type itemType)
+        public override void Save(Type itemType)
         {
             var dataTypes = Service.GetAllDataTypeDefinitions();
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DataTypeAttribute) as DataTypeAttribute;
@@ -54,7 +42,6 @@ namespace NicBell.UCreate.Sync
             else
                 Service.Save(dt);
         }
-
 
 
         public IDataTypeDefinition GetDataType(string name)

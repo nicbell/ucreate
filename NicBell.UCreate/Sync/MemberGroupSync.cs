@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NicBell.UCreate.Attributes;
+using System;
 using System.Linq;
-using NicBell.UCreate.Attributes;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
@@ -20,22 +20,12 @@ namespace NicBell.UCreate.Sync
             }
         }
 
-        /// <summary>
-        /// Syncs a list of membergroups
-        /// </summary>>
-        public override void SyncAll()
-        {
-            foreach (var memeberGroup in TypesToSync)
-            {
-                Save(memeberGroup);
-            }
-        }
 
         /// <summary>
         /// Saves
         /// </summary>
         /// <param name="itemType"></param>
-        public void Save(Type itemType)
+        public override void Save(Type itemType)
         {
             var memberGroups = Service.GetAll();
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MemberGroupAttribute) as MemberGroupAttribute;
