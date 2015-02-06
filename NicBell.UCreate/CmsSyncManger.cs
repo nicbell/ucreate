@@ -2,13 +2,14 @@
 using NicBell.UCreate.Interfaces;
 using NicBell.UCreate.Sync;
 using System;
+using System.Linq;
 
 namespace NicBell.UCreate
 {
     internal class CmsSyncManger
     {
-        private static string _syncObj = "sync";
-        private static bool _synchronized = false;
+        private static readonly object Mutex = new object();
+        private static bool _synchronized;
 
         /// <summary>
         /// Add stuff if it isn't added
@@ -18,7 +19,7 @@ namespace NicBell.UCreate
             // avoid immediate locking because it will impact performance
             if (!_synchronized)
             {
-                lock (_syncObj)
+                lock (Mutex)
                 {
                     if (!_synchronized)
                     {
@@ -52,9 +53,8 @@ namespace NicBell.UCreate
             //Syncing tasks that user wants to run.
             var syncTaskTypes = ReflectionHelper.GetTypesThatImplementInterface(typeof(ISyncTask));
 
-            foreach (var syncTaskType in syncTaskTypes)
+            foreach (var task in syncTaskTypes.Select(syncTaskType => Activator.CreateInstance(syncTaskType) as ISyncTask))
             {
-                var task = Activator.CreateInstance(syncTaskType) as ISyncTask;
                 task.Run();
             }
 

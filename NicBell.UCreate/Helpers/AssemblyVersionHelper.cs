@@ -10,7 +10,7 @@ namespace NicBell.UCreate.Helpers
 {
     public static class AssemblyVersionHelper
     {
-        private static string _syncVersionFile = "ucreate.json";
+        private const string SyncVersionFile = "ucreate.json";
 
         /// <summary>
         /// Updates sync version JSON
@@ -18,7 +18,7 @@ namespace NicBell.UCreate.Helpers
         public static void Update()
         {
             var assemblyVersions = GetAssemblyVersions();
-            var fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/app_data/"), _syncVersionFile);
+            var fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/app_data/"), SyncVersionFile);
 
             using (var myFile = File.Open(fileName, FileMode.Create))
             {
@@ -38,7 +38,7 @@ namespace NicBell.UCreate.Helpers
         public static bool IsSynced()
         {
             var assemblyVersions = GetAssemblyVersions(); 
-            var fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/app_data/"), _syncVersionFile);
+            var fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/app_data/"), SyncVersionFile);
 
             if (File.Exists(fileName))
             {

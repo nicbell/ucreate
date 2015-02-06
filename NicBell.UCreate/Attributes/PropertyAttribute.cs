@@ -8,7 +8,7 @@ namespace NicBell.UCreate.Attributes
     /// <summary>
     /// Makes property as part of the generated type
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class PropertyAttribute : Attribute
     {
         public string Alias { get; set; }

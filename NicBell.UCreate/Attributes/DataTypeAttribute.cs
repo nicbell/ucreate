@@ -3,7 +3,7 @@ using Umbraco.Core.Models;
 
 namespace NicBell.UCreate.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class DataTypeAttribute : Attribute 
     {
         /// <summary>

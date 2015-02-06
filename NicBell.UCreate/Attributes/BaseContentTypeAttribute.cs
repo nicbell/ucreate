@@ -5,7 +5,7 @@ namespace NicBell.UCreate.Attributes
     /// <summary>
     /// Base attribute for content
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public abstract class BaseContentTypeAttribute : Attribute
     {
         /// <summary>
