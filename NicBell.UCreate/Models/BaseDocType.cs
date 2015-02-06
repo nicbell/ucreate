@@ -34,11 +34,10 @@ namespace NicBell.UCreate.Models
                     //Custom converter..
                     var converterAttr = property.GetCustomAttribute<TypeConverterAttribute>();
 
-                    if (converterAttr != null && value != null)
+                    if (converterAttr != null)
                     {
                         var converter = Activator.CreateInstance(Type.GetType(converterAttr.ConverterTypeName)) as TypeConverter;
-                        converter.CanConvertFrom(value.GetType());
-                        property.SetValue(this, converter.ConvertFrom(value));
+                        property.SetValue(this, converter.ConvertFrom(value ?? String.Empty));
                     }
                     else
                     {
