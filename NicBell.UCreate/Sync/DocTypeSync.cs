@@ -44,7 +44,8 @@ namespace NicBell.UCreate.Sync
         /// Set templates for doctypes
         /// </summary>
         /// <param name="ct"></param>
-        /// <param name="attr"></param>
+        /// <param name="allowedTemplates"></param>
+        /// <param name="defaultTemplate"></param>
         private void SetTemplates(IContentType ct, string[] allowedTemplates, string defaultTemplate)
         {
             if (allowedTemplates == null || allowedTemplates.Length == 0)

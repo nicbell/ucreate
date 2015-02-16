@@ -40,6 +40,11 @@
             {
                 <li><a href="@link.Link">@link.Caption</a></li>
             }
+
+            @foreach (var tag in Model.Content.Tags)
+            {
+                <p>@tag</p>
+            }
         </ul>
     </div>
 </body>

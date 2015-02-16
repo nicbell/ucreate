@@ -159,6 +159,7 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -239,6 +240,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ValueListConverter.cs" />
+    <Compile Include="DataTypes\TagPicker.cs" />
     <Compile Include="DocumentTypes\Base.cs" />
     <Compile Include="DocumentTypes\BlogIndex.cs" />
     <Compile Include="DocumentTypes\BlogItem.cs" />

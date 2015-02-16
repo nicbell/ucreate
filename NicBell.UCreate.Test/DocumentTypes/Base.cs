@@ -1,8 +1,10 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Constants;
 using NicBell.UCreate.Models;
+using NicBell.UCreate.Test.Converters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using Umbraco.Core.Models;
@@ -19,5 +21,9 @@ namespace NicBell.UCreate.Test.DocumentTypes
 
         [Property(Alias = "metaDescription", TypeName = PropertyTypes.Textstring, Name = "Description", Description = "Meta description", Mandatory = true, TabName = "Meta")]
         public string MetaDescription { get; set; }
+
+        [TypeConverter(typeof(ValueListConverter))]
+        [Property(Alias = "tags", TypeName = "Tag Picker", Name = "Tags", Description = "Tags", Mandatory = false, TabName = "Meta")]
+        public List<string> Tags { get; set; }
     }
 }
