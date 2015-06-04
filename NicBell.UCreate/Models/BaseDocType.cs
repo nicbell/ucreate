@@ -24,7 +24,7 @@ namespace NicBell.UCreate.Models
         /// <param name="content"></param>
         private void SetValues(IPublishedContent content)
         {
-            foreach (var property in GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(PropertyAttribute), false)))
+            foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(prop => Attribute.IsDefined(prop, typeof(PropertyAttribute), false)))
             {
                 var alias = property.GetCustomAttribute<PropertyAttribute>(false).Alias;
                 SetValue(property, content.GetProperty(alias).Value);

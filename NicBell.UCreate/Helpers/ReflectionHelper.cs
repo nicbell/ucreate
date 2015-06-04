@@ -30,11 +30,7 @@ namespace NicBell.UCreate.Helpers
         {
             return GetDependentAssemblies(Assembly.GetExecutingAssembly())
                  .SelectMany(x => x.GetTypes())
-                 .Where(t =>
-                 {
-                     var attr = Attribute.GetCustomAttribute(t, attributeType);
-                     return attr != null;
-                 })
+                 .Where(t => Attribute.IsDefined(t, attributeType))
                  .ToList();
         }
 
