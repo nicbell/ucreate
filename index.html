@@ -1,175 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
+    <meta charset="UTF-8">
     <title>UCreate by nicbell</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>UCreate</h1>
-        <h2>Create strongly typed views and generate DocTypes, DataTypes and MediaTypes for Umbraco 7 using a code-first approach.</h2>
-        <a href="https://github.com/nicbell/ucreate" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">UCreate</h1>
+      <h2 class="project-tagline">Create strongly typed views and generate DocTypes, DataTypes and MediaTypes for Umbraco 7 using a code-first approach.</h2>
+      <a href="https://github.com/nicbell/ucreate" class="btn">View on GitHub</a>
+      <a href="https://github.com/nicbell/ucreate/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/nicbell/ucreate/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
-<a name="ucreate-" class="anchor" href="#ucreate-"><span class="octicon octicon-link"></span></a>UCreate <a href="https://ci.appveyor.com/project/nicbell/ucreate"><img src="https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q" alt="Build status"></a>
+    <section class="main-content">
+      <h1>
+<a id="ucreate-" class="anchor" href="#ucreate-" aria-hidden="true"><span class="octicon octicon-link"></span></a>UCreate <a href="https://ci.appveyor.com/project/nicbell/ucreate"><img src="https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q" alt="Build status"></a>
 </h1>
 
-<p>Create doc types, media types and data types for Umbraco 7 using a code-first approach. Inspired by <a href="https://github.com/spopovic/uSiteBuilder">USiteBuilder</a>.</p>
+<p>Create doc types, media types, data types, member types and member groups for Umbraco 7 using a code-first approach. Inspired by <a href="https://github.com/spopovic/uSiteBuilder">USiteBuilder</a>.</p>
 
 <h2>
-<a name="available-on-nuget" class="anchor" href="#available-on-nuget"><span class="octicon octicon-link"></span></a>Available on NuGet</h2>
+<a id="available-on-nuget" class="anchor" href="#available-on-nuget" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available on NuGet</h2>
 
 <pre><code>PM&gt; Install-Package UCreate
 </code></pre>
 
 <h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>The only configuration you'll need to get started is an app setting in your <code>web.config</code>. This tells UCreate to sync your doc types, media types and data types on application start.</p>
+<p>The only configuration you'll need to get started is an app setting in your <code>web.config</code>. This tells UCreate to sync your doc types, media types, data types, member types and member groups on application start.</p>
 
 <div class="highlight highlight-xml"><pre>...
-<span class="nt">&lt;appSettings&gt;</span>
+&lt;<span class="pl-ent">appSettings</span>&gt;
     ...
-    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"UCreateSyncEnabled"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+    &lt;<span class="pl-ent">add</span> <span class="pl-e">key</span>=<span class="pl-s"><span class="pl-pds">"</span>UCreateSyncEnabled<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> /&gt;
     ...
-<span class="nt">&lt;/appSettings&gt;</span>
-...
-</pre></div>
+&lt;/<span class="pl-ent">appSettings</span>&gt;
+...</pre></div>
 
 <h2>
-<a name="doctype-example" class="anchor" href="#doctype-example"><span class="octicon octicon-link"></span></a>DocType example</h2>
+<a id="doctype-example" class="anchor" href="#doctype-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>DocType example</h2>
 
 <p>Doc types support property inheritance. Here is a list of available <a href="http://nicbell.github.io/ucreate/icons.html">icons</a>.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="na">[DocType(Name = "Page With Title",</span>
-<span class="na">    Icon = "icon-zip color-blue",</span>
-<span class="na">    AllowedAsRoot = true,</span>
-<span class="na">    AllowedTemplates = new[]</span> <span class="p">{</span> <span class="s">"PageWithTitle"</span> <span class="p">},</span>
-    <span class="n">DefaultTemplate</span> <span class="p">=</span> <span class="s">"PageWithTitle"</span><span class="p">)]</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">PageWithTitle</span> <span class="p">:</span> <span class="n">BaseDocType</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="nf">PageWithTitle</span><span class="p">(</span><span class="n">IPublishedContent</span> <span class="n">content</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="p">{</span> <span class="p">}</span>
+<div class="highlight highlight-csharp"><pre>[DocType(Name = <span class="pl-s"><span class="pl-pds">"</span>Page With Title<span class="pl-pds">"</span></span>,
+    Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-zip color-blue<span class="pl-pds">"</span></span>,
+    AllowedAsRoot = <span class="pl-c1">true</span>,
+    AllowedTemplates = <span class="pl-k">new</span>[] { <span class="pl-s"><span class="pl-pds">"</span>PageWithTitle<span class="pl-pds">"</span></span> },
+    DefaultTemplate = <span class="pl-s"><span class="pl-pds">"</span>PageWithTitle<span class="pl-pds">"</span></span>)]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">PageWithTitle</span> : <span class="pl-k">BaseDocType</span>
+{
+    <span class="pl-k">public</span> <span class="pl-en">PageWithTitle</span>(<span class="pl-k">IPublishedContent</span> <span class="pl-smi">content</span>) : <span class="pl-c1">base</span>(content)
+    { }
 
-<span class="na">    [Property(Alias = "heading", TypeName = PropertyTypes.Textstring, Description = "Heading for page", Mandatory = true, TabName = "Content")]</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">Heading</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+    [Property(Alias = <span class="pl-s"><span class="pl-pds">"</span>heading<span class="pl-pds">"</span></span>, TypeName = PropertyTypes.Textstring, Description = <span class="pl-s"><span class="pl-pds">"</span>Heading for page<span class="pl-pds">"</span></span>, Mandatory = <span class="pl-c1">true</span>, TabName = <span class="pl-s"><span class="pl-pds">"</span>Content<span class="pl-pds">"</span></span>)]
+    <span class="pl-k">public</span> <span class="pl-k">string</span> <span class="pl-en">Heading</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
 
 <h2>
-<a name="mediatype-example" class="anchor" href="#mediatype-example"><span class="octicon octicon-link"></span></a>MediaType example</h2>
+<a id="mediatype-example" class="anchor" href="#mediatype-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>MediaType example</h2>
 
 <p>Media types support property inheritance.</p>
 
-<div class="highlight highlight-csharp"><pre><span class="na">[MediaType(Name = "Folder With Cover",</span>
-<span class="na">    Icon = "icon-folder color-blue",</span>
-<span class="na">    AllowedAsRoot = true,</span>
-<span class="na">    IsContainer = true,</span>
-<span class="na">    AllowedTypes = new[]</span> <span class="p">{</span> <span class="s">"FolderWithCover"</span><span class="p">,</span> <span class="s">"Image"</span> <span class="p">})]</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">FolderWithCover</span>
-<span class="p">{</span>
-<span class="na">    [Property(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]</span>
-    <span class="k">public</span> <span class="kt">string</span> <span class="n">CoverImage</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-csharp"><pre>[MediaType(Name = <span class="pl-s"><span class="pl-pds">"</span>Folder With Cover<span class="pl-pds">"</span></span>,
+    Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-folder color-blue<span class="pl-pds">"</span></span>,
+    AllowedAsRoot = <span class="pl-c1">true</span>,
+    IsContainer = <span class="pl-c1">true</span>,
+    AllowedTypes = <span class="pl-k">new</span>[] { <span class="pl-s"><span class="pl-pds">"</span>FolderWithCover<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Image<span class="pl-pds">"</span></span> })]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">FolderWithCover</span>
+{
+    [Property(Alias = <span class="pl-s"><span class="pl-pds">"</span>coverImage<span class="pl-pds">"</span></span>, TypeName = PropertyTypes.MediaPicker, Description = <span class="pl-s"><span class="pl-pds">"</span>Cover image.<span class="pl-pds">"</span></span>, Mandatory = <span class="pl-c1">true</span>)]
+    <span class="pl-k">public</span> <span class="pl-k">string</span> <span class="pl-en">CoverImage</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
 
 <h2>
-<a name="datatype-with-prevalues-example" class="anchor" href="#datatype-with-prevalues-example"><span class="octicon octicon-link"></span></a>DataType with prevalues example</h2>
+<a id="datatype-with-prevalues-example" class="anchor" href="#datatype-with-prevalues-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataType with prevalues example</h2>
 
-<div class="highlight highlight-csharp"><pre><span class="na">[DataType(EditorAlias = Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias,</span>
-<span class="na">    Name = "Nice Color Picker",</span>
-<span class="na">    Key = "1bfca1e7-95d0-485e-bd94-9fe9c2b8821f",</span>
-<span class="na">    DBType = DataTypeDatabaseType.Nvarchar)]</span>
-<span class="k">public</span> <span class="k">class</span> <span class="nc">NiceColorPicker</span> <span class="p">:</span> <span class="n">IHasPreValues</span>
-<span class="p">{</span>
-    <span class="c1">/// &lt;summary&gt;</span>
-    <span class="c1">/// Implementing PreValues</span>
-    <span class="c1">/// &lt;/summary&gt;</span>
-    <span class="k">public</span> <span class="n">IDictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">PreValue</span><span class="p">&gt;</span> <span class="n">PreValues</span>
-    <span class="p">{</span>
-        <span class="k">get</span>
-        <span class="p">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">PreValue</span><span class="p">&gt;</span> <span class="p">{</span>
-                <span class="p">{</span><span class="s">"1"</span><span class="p">,</span> <span class="k">new</span> <span class="n">PreValue</span><span class="p">(</span><span class="s">"ff00ff"</span><span class="p">)},</span>
-                <span class="p">{</span><span class="s">"2"</span><span class="p">,</span> <span class="k">new</span> <span class="n">PreValue</span><span class="p">(</span><span class="s">"1f00f1"</span><span class="p">)},</span>
-                <span class="p">{</span><span class="s">"3"</span><span class="p">,</span> <span class="k">new</span> <span class="n">PreValue</span><span class="p">(</span><span class="s">"123123"</span><span class="p">)},</span>
-                <span class="p">{</span><span class="s">"4"</span><span class="p">,</span> <span class="k">new</span> <span class="n">PreValue</span><span class="p">(</span><span class="s">"ffffff"</span><span class="p">)}</span>
-            <span class="p">};</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<div class="highlight highlight-csharp"><pre>[DataType(EditorAlias = Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias,
+    Name = <span class="pl-s"><span class="pl-pds">"</span>Nice Color Picker<span class="pl-pds">"</span></span>,
+    Key = <span class="pl-s"><span class="pl-pds">"</span>1bfca1e7-95d0-485e-bd94-9fe9c2b8821f<span class="pl-pds">"</span></span>,
+    DBType = DataTypeDatabaseType.Nvarchar)]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">NiceColorPicker</span> : <span class="pl-k">IHasPreValues</span>
+{
+    <span class="pl-c">/// &lt;<span class="pl-ent">summary</span>&gt;</span>
+    <span class="pl-c">/// Implementing PreValues</span>
+    <span class="pl-c">/// &lt;/<span class="pl-ent">summary</span>&gt;</span>
+    <span class="pl-k">public</span> IDictionary&lt;<span class="pl-k">string</span>, PreValue&gt; PreValues
+    {
+        <span class="pl-k">get</span>
+        {
+            <span class="pl-k">return</span> <span class="pl-k">new</span> Dictionary&lt;<span class="pl-k">string</span>, PreValue&gt; {
+                {<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>, <span class="pl-k">new</span> PreValue(<span class="pl-s"><span class="pl-pds">"</span>ff00ff<span class="pl-pds">"</span></span>)},
+                {<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>, <span class="pl-k">new</span> PreValue(<span class="pl-s"><span class="pl-pds">"</span>1f00f1<span class="pl-pds">"</span></span>)},
+                {<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span>, <span class="pl-k">new</span> PreValue(<span class="pl-s"><span class="pl-pds">"</span>123123<span class="pl-pds">"</span></span>)},
+                {<span class="pl-s"><span class="pl-pds">"</span>4<span class="pl-pds">"</span></span>, <span class="pl-k">new</span> PreValue(<span class="pl-s"><span class="pl-pds">"</span>ffffff<span class="pl-pds">"</span></span>)}
+            };
+        }
+    }
+}</pre></div>
 
 <h2>
-<a name="strongly-typed-views" class="anchor" href="#strongly-typed-views"><span class="octicon octicon-link"></span></a>Strongly typed views</h2>
+<a id="membertype-example" class="anchor" href="#membertype-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>MemberType example</h2>
+
+<div class="highlight highlight-csharp"><pre>[MemberType(Name = <span class="pl-s"><span class="pl-pds">"</span>Employee<span class="pl-pds">"</span></span>, Description = <span class="pl-s"><span class="pl-pds">"</span>Member who represents an employee<span class="pl-pds">"</span></span>, Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-user color-green<span class="pl-pds">"</span></span>)]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Employee</span>
+{
+    [MemberProperty(Alias = <span class="pl-s"><span class="pl-pds">"</span>jobTitle<span class="pl-pds">"</span></span>, TypeName = PropertyTypes.Textstring, Description = <span class="pl-s"><span class="pl-pds">"</span>Employee's job title<span class="pl-pds">"</span></span>, Mandatory = <span class="pl-c1">true</span>, TabName = <span class="pl-s"><span class="pl-pds">"</span>Job Details<span class="pl-pds">"</span></span>, CanEdit = <span class="pl-c1">true</span>, ShowOnProfile = <span class="pl-c1">true</span>)]
+    <span class="pl-k">public</span> <span class="pl-k">string</span> <span class="pl-en">JobTitle</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    [MemberProperty(Alias = <span class="pl-s"><span class="pl-pds">"</span>jobDescription<span class="pl-pds">"</span></span>, TypeName = PropertyTypes.Textboxmultiple, Description = <span class="pl-s"><span class="pl-pds">"</span>Employee's job description<span class="pl-pds">"</span></span>, Mandatory = <span class="pl-c1">false</span>, TabName = <span class="pl-s"><span class="pl-pds">"</span>Job Details<span class="pl-pds">"</span></span>, CanEdit = <span class="pl-c1">true</span>, ShowOnProfile = <span class="pl-c1">false</span>)]
+    <span class="pl-k">public</span> <span class="pl-k">string</span> <span class="pl-en">JobDescription</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    [MemberProperty(Alias = <span class="pl-s"><span class="pl-pds">"</span>profilePicture<span class="pl-pds">"</span></span>, TypeName = PropertyTypes.MediaPicker, Description = <span class="pl-s"><span class="pl-pds">"</span>Admin profile picture<span class="pl-pds">"</span></span>, Mandatory = <span class="pl-c1">false</span>, CanEdit = <span class="pl-c1">true</span>, ShowOnProfile = <span class="pl-c1">true</span>)]
+    <span class="pl-k">public</span> <span class="pl-k">string</span> <span class="pl-en">ProfilePicture</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
+
+<h2>
+<a id="membergroup-example" class="anchor" href="#membergroup-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>MemberGroup example</h2>
+
+<div class="highlight highlight-csharp"><pre>[MemberGroup(Name = <span class="pl-s"><span class="pl-pds">"</span>Staff<span class="pl-pds">"</span></span>)]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Staff</span>
+{
+}</pre></div>
+
+<h2>
+<a id="strongly-typed-views" class="anchor" href="#strongly-typed-views" aria-hidden="true"><span class="octicon octicon-link"></span></a>Strongly typed views</h2>
 
 <p>In order to use your doc types on the front-end you need to enable the <code>PublishedContentModel</code> factory. UCreate can do this for you if add the following app setting:</p>
 
 <div class="highlight highlight-xml"><pre>...
-<span class="nt">&lt;appSettings&gt;</span>
+&lt;<span class="pl-ent">appSettings</span>&gt;
     ...
-    <span class="nt">&lt;add</span> <span class="na">key=</span><span class="s">"UCreatePublishedModelsEnabled"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+    &lt;<span class="pl-ent">add</span> <span class="pl-e">key</span>=<span class="pl-s"><span class="pl-pds">"</span>UCreatePublishedModelsEnabled<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> /&gt;
     ...
-<span class="nt">&lt;/appSettings&gt;</span>
-...
-</pre></div>
+&lt;/<span class="pl-ent">appSettings</span>&gt;
+...</pre></div>
 
 <p>Then using the doc types in your views is pretty simple.</p>
 
-<div class="highlight highlight-html"><pre>@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<span class="nt">&lt;NicBell.UCreate.Test.DocTypes.PageWithTitle&gt;</span>
+<div class="highlight highlight-html"><pre>@inherits Umbraco.Web.Mvc.UmbracoTemplatePage&lt;<span class="pl-ent">NicBell</span>.<span class="pl-e">UCreate</span>.<span class="pl-e">Test</span>.<span class="pl-e">DocTypes</span>.<span class="pl-e">PageWithTitle</span>&gt;
 
 @{
     Layout = null;
 }
 
-<span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;title&gt;</span>PageWithTitle<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;h1&gt;</span>@Model.Content.Heading<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</pre></div>
-        </section>
+&lt;!DOCTYPE html&gt;
+&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+    &lt;<span class="pl-ent">meta</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>viewport<span class="pl-pds">"</span></span> <span class="pl-e">content</span>=<span class="pl-s"><span class="pl-pds">"</span>width=device-width<span class="pl-pds">"</span></span> /&gt;
+    &lt;<span class="pl-ent">title</span>&gt;PageWithTitle&lt;/<span class="pl-ent">title</span>&gt;
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+    &lt;<span class="pl-ent">h1</span>&gt;@Model.Content.Heading&lt;/<span class="pl-ent">h1</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;</pre></div>
 
-        <aside id="sidebar">
-          <a href="https://github.com/nicbell/ucreate/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/nicbell/ucreate/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/nicbell/ucreate">UCreate</a> is maintained by <a href="https://github.com/nicbell">nicbell</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/nicbell/ucreate"></a> is maintained by <a href="https://github.com/nicbell">nicbell</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
   
   </body>
 </html>
+
