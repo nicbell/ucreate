@@ -2,6 +2,7 @@
 using NicBell.UCreate.Constants;
 using NicBell.UCreate.Converters;
 using NicBell.UCreate.Test.Converters;
+using NicBell.UCreate.Test.DataTypes;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -19,6 +20,10 @@ namespace NicBell.UCreate.Test.DocumentTypes
         public Home(IPublishedContent content)
             : base(content)
         { }
+
+        [TypeConverter(typeof(ArchetypeListConverter<Thing>))]
+        [Property(Alias = "someThings", Name = "Some Things", TypeName = "Things", TabName = "Content", Mandatory = true)]
+        public List<Thing> Things { get; set; }
 
         [Property(Alias = "someCopy", Name = "Some Copy", TypeName = PropertyTypes.Richtexteditor, TabName = "Content", Mandatory = true)]
         public string SomeCopy { get; set; }
