@@ -27,7 +27,18 @@ namespace NicBell.UCreate.Models
             foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(prop => Attribute.IsDefined(prop, typeof(PropertyAttribute), false)))
             {
                 var alias = property.GetCustomAttribute<PropertyAttribute>(false).Alias;
-                SetValue(property, content.GetProperty(alias).Value);
+                var publishedProperty = content.GetProperty(alias);
+
+                //Local links cause stack overflow when accessing value during publish.
+                //Use @Html.Raw(TemplateUtilities.ParseInternalLinks(value)) to resolve these URLs on the template.
+                if (publishedProperty.DataValue is String && (publishedProperty.DataValue as String).Contains("localLink"))
+                {
+                    SetValue(property, publishedProperty.DataValue);
+                }
+                else
+                {
+                    SetValue(property, publishedProperty.Value);
+                }
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<Home>
 
 @using NicBell.UCreate.Test.DocumentTypes
+@using Umbraco.Web.Templates
 
 @{
     Layout = null;
@@ -26,7 +27,7 @@
     <div style="padding: 10px; background: #CCC">
         <h4>Some copy</h4>
         <div>
-            @Html.Raw(Model.Content.SomeCopy)
+            @Html.Raw(TemplateUtilities.ParseInternalLinks(Model.Content.SomeCopy))
         </div>
         <h4>Some color split into RGB using a custom converter</h4>
         <ul>
