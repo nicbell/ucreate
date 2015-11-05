@@ -47,3 +47,6 @@ build:
 
   # MSBuild verbosity level
   verbosity: normal
+
+before_build:
+  - nuget restore
