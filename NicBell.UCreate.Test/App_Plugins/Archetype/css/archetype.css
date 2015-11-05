@@ -1,6 +1,12 @@
-/* TODO: clean this up */
+/* Version 1.11.1 */
 .archetypeEditor {
   width: 98%;
+}
+.archetypeEditor .usky-grid .cell-tools-menu {
+  height: 385px;
+}
+.archetypeEditor .usky-grid.withGroups .cell-tools-menu {
+  height: 415px;
 }
 .archetypeEditor .open {
   position: relative;
@@ -18,17 +24,26 @@
   margin-left: 0;
 }
 .archetypeEditor .icon {
+  color: #ddd;
+  padding: 2px;
+  font-size: 16px;
+}
+.archetypeEditor .icon:hover {
   color: #333;
+}
+.archetypeEditor .icon.icon-delete:hover {
+  color: #b94a48;
 }
 .archetypeEditor .fieldsetIcon {
   float: left;
-  padding-right: 4px;
+  padding: 0 4px 0 0;
+  color: #333;
+  vertical-align: text-bottom;
 }
 .archetypeEditor fieldset {
-  border: 1px solid #dddddd;
+  border-bottom: 1px dashed #dddddd;
   padding: 0;
   margin-bottom: 5px;
-  background-color: #f1f1f1;
   clear: both;
   display: inline-block;
   width: 100%;
@@ -53,11 +68,25 @@
   min-height: 42px;
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel .label-sub {
-  padding: 8px 0 4px 0;
+  padding: 8px 0 8px 0;
   display: inline-block;
+  min-height: 20px;
+  /* this makes the header clickable when there's no icon and no text */
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel .label-sub.module-label {
   width: 100%;
+}
+.archetypeEditor fieldset .archetypeFieldsetLabel .label-sub:hover {
+  cursor: pointer;
+}
+.archetypeEditor fieldset .archetypeFieldsetLabel .label-sub:hover label span {
+  text-decoration: underline;
+}
+.archetypeEditor fieldset .archetypeFieldsetLabel .label-sub:hover label:hover {
+  cursor: pointer;
+}
+.archetypeEditor fieldset .archetypeFieldsetLabel .label-sub:hover .caret-right {
+  border-left-color: #333;
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel .dropdown-menu {
   position: relative;
@@ -75,32 +104,23 @@
 .archetypeEditor fieldset .archetypeFieldsetLabel label:hover {
   cursor: default;
 }
-.archetypeEditor fieldset .archetypeFieldsetLabel.enableCollapsing:hover {
-  cursor: pointer;
-}
-.archetypeEditor fieldset .archetypeFieldsetLabel.enableCollapsing:hover label span {
-  text-decoration: underline;
-}
-.archetypeEditor fieldset .archetypeFieldsetLabel.enableCollapsing:hover label:hover {
-  cursor: pointer;
-}
 .archetypeEditor fieldset .archetypeFieldsetLabel .caret {
-  margin: 8px 1px 0 15px;
+  margin: 8px 1px 0 2px;
   position: absolute;
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel .caret.caret-right {
   border-bottom: 4px solid transparent;
   border-top: 4px solid transparent;
-  border-left: 4px solid #000000;
+  border-left: 4px solid #ddd;
   content: "";
   margin-top: 6px;
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel label {
   margin-bottom: 0;
-  margin-left: 38px;
+  margin-left: 18px;
   white-space: nowrap;
   padding: 0;
-  width: calc(100% - 132px);
+  width: calc(100% - 144px);
   position: absolute;
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel label span {
@@ -108,8 +128,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.archetypeEditor fieldset .archetypeFieldsetLabel label.dimmed {
-  color: #d9d9d9;
+.archetypeEditor fieldset .archetypeFieldsetLabel label.dimmed i,
+.archetypeEditor fieldset .archetypeFieldsetLabel label.dimmed span {
+  color: #d9d9d9 !important;
 }
 .archetypeEditor fieldset .archetypeFieldsetLabel .archetypeEditorControls {
   float: none;
@@ -129,9 +150,8 @@
 .archetypeEditor fieldset .archetypeCollapser {
   clear: both;
   height: 100%;
-  padding-top: 12px;
+  padding: 12px 0 0 20px;
   background-color: #fff;
-  border-top: 1px solid silver;
   border-radius: 0 0 0 5px;
 }
 .archetypeEditor fieldset .archetypeCollapser form {
@@ -155,12 +175,22 @@
 .archetypeEditor .archetypeFieldsetError {
   border: 1px solid #b94a48;
 }
+.archetypeEditor .archetypeAddButton {
+  color: #ddd;
+}
+.archetypeEditor .archetypeAddButton .icon {
+  vertical-align: text-top;
+}
 .archetypeEditor .archetypeAddButton:hover {
+  color: #333;
   text-decoration: none;
   cursor: pointer;
 }
 .archetypeEditor .archetypeAddButton:hover .archetypeAddButtonText {
   text-decoration: underline;
+}
+.archetypeEditor .archetypeAddButton:hover .icon {
+  color: #333;
 }
 .archetypeEditor .multiPropertyTextbox {
   margin-bottom: 3px;
@@ -172,24 +202,73 @@
 .archetypeEditor .show-validation.ng-invalid .control-group.error .control-label span {
   color: #343434;
 }
+.archetypeEditor .fieldsetPicker .icon {
+  color: #333;
+}
+.archetypeEditor .fieldsetPicker ul.elements li {
+  overflow: visible;
+  vertical-align: top;
+  height: 90px;
+}
+.archetypeEditor .fieldsetPicker ul.groups {
+  display: block;
+  margin: 0;
+  padding: 4px;
+}
+.archetypeEditor .fieldsetPicker ul.groups li {
+  width: auto;
+  margin: 0;
+  padding: 0 20px;
+  font-weight: bold;
+}
+.archetypeEditor .fieldsetPicker ul.groups li a {
+  color: #d9d9d9;
+  cursor: pointer;
+}
+.archetypeEditor .fieldsetPicker ul.groups li.active a,
+.archetypeEditor .fieldsetPicker ul.groups li a:hover {
+  color: #999;
+  text-decoration: none;
+}
 .archetypeEditor .archetypeEditorControls,
 .archetypeConfig .archetypeEditorControls {
   float: right;
 }
 .archetypeEditor .archetypeEditorControls i,
-.archetypeConfig .archetypeEditorControls i {
+.archetypeConfig .archetypeEditorControls i,
+.archetypeEditor .archetypeFieldsetGroups i,
+.archetypeConfig .archetypeFieldsetGroups i {
   cursor: pointer;
 }
 .archetypeEditor .archetypeEditorControls i.handle,
-.archetypeConfig .archetypeEditorControls i.handle {
+.archetypeConfig .archetypeEditorControls i.handle,
+.archetypeEditor .archetypeFieldsetGroups i.handle,
+.archetypeConfig .archetypeFieldsetGroups i.handle {
   cursor: move;
 }
 .archetypeEditor .archetypeEditorControls i.dimmed,
-.archetypeConfig .archetypeEditorControls i.dimmed {
+.archetypeConfig .archetypeEditorControls i.dimmed,
+.archetypeEditor .archetypeFieldsetGroups i.dimmed,
+.archetypeConfig .archetypeFieldsetGroups i.dimmed {
   color: #d9d9d9;
 }
 .archetypeConfig {
   margin-bottom: 20px;
+}
+.archetypeConfig .archetype-headline img {
+  margin-right: 5px;
+}
+.archetypeConfig .archetype-headline small {
+  margin-left: 5px;
+}
+.archetypeConfig .archetype-headline a {
+  float: right;
+}
+.archetypeConfig .archetype-headline a img {
+  width: 35px;
+}
+.archetypeConfig .manual-link {
+  color: blue;
 }
 .archetypeConfig ul {
   list-style: none;
@@ -255,14 +334,31 @@
 .archetypeConfig .archetypePropertiesWrapper li:last-child {
   margin-bottom: 0;
 }
-.archetypeConfig .archetypeAdvancedOptions {
+.archetypeConfig .archetypeAdvancedOptions label {
+  width: 100%;
+}
+.archetypeConfig .archetypeAdvancedOptions input[type=checkbox] {
+  margin-top: 0;
+  margin-right: 2px;
+}
+.archetypeConfig .archetypeAdvancedOptions small {
+  color: #b3b3b3;
+}
+.archetypeConfig .archetypeAdvancedOptions .archetypeFieldsetGroups {
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+.archetypeConfig .archetypeAdvancedOptions .archetypeFieldsetGroups ul {
+  padding: 0;
+  margin: 0;
   margin-top: 15px;
 }
-.archetypeConfig .archetypeAdvancedOptions div {
-  margin-bottom: 10px;
+.archetypeConfig .archetypeAdvancedOptions .archetypeFieldsetGroups ul li label {
+  width: 120px;
 }
-.archetypeConfig .archetypeAdvancedOptions label {
-  width: 400px;
+.archetypeConfig .archetypeAdvancedOptions .archetypeFieldsetGroups ul li input {
+  vertical-align: middle;
+  width: 240px;
 }
 .archetypeConfig .archetypeMaxFieldsets {
   border: 1px solid #ddd;
@@ -288,4 +384,7 @@
 .ui-sortable-placeholder {
   visibility: visible !important;
   background-color: #d0e7f1 !important;
+}
+.archetype-dialog {
+  margin: 10px;
 }

@@ -16,6 +16,8 @@ node_modules
 NuGetBackup
 dummy.txt
 
+**/App_Data/cache/*
+
 # Ignore .net user files
 *.suo
 *.user
