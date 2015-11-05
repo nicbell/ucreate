@@ -10,15 +10,25 @@ umbraco.config
 ucreate.json
 **/bin
 **/obj
-packages/*/*
 .sass-cache
 node_modules
 NuGetBackup
 dummy.txt
 
 **/App_Data/cache/*
+.vs/
 
 # Ignore .net user files
 *.suo
 *.user
 *.sln.docstates
+
+
+# Ignore NuGet Packages
+*.nupkg
+# Ignore the packages folder
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
