@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Hosting;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 
@@ -60,8 +61,8 @@ namespace NicBell.UCreate.Sync
 
             foreach (var templateAlias in allowedTemplates)
             {
-                var template = GetOrCreateTemplate(itemType, templateAlias);
-                templates.Add(template);
+                var currentTemplate = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
+                templates.Add(currentTemplate ?? CreateTemplate(itemType, templateAlias));
             }
 
             ct.AllowedTemplates = templates;
@@ -75,21 +76,23 @@ namespace NicBell.UCreate.Sync
         /// <param name="itemType"></param>
         /// <param name="templateAlias"></param>
         /// <returns></returns>
-        private ITemplate GetOrCreateTemplate(Type itemType, string templateAlias)
+        private static ITemplate CreateTemplate(Type itemType, string templateAlias)
         {
-            var template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
-
-            if (template == null)
+            var template = new Template(templateAlias, templateAlias)
             {
-                template = new Template(templateAlias, templateAlias);
-                //TODO: read file system for existing template.
-                template.Content = "@inherits UmbracoTemplatePage<" + itemType.FullName + ">\n\n<h1>@Model.Content.Name</h1>";
+                Content = "@inherits UmbracoTemplatePage<" + itemType.FullName + ">\n\n<h1>@Model.Content.Name</h1>",
+                Path = string.Format("~/Views/{0}.cshtml", templateAlias)
+            };
 
-                ApplicationContext.Current.Services.FileService.SaveTemplate(template);
-                template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
+            var templateDiskPath = HostingEnvironment.MapPath(template.Path);
+
+            if (System.IO.File.Exists(templateDiskPath))
+            {
+                template.Content = System.IO.File.ReadAllText(templateDiskPath);
             }
 
-            return template;
+            ApplicationContext.Current.Services.FileService.SaveTemplate(template);
+            return ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
         }
     }
 }
