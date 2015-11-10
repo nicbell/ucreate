@@ -99,13 +99,10 @@ namespace NicBell.UCreate.Sync
 
             var allowedTypes = new List<ContentTypeSort>();
 
-            foreach (var allowedTypeAlias in allowedTypeAliases)
+            for (int i = 0; i < allowedTypeAliases.Length; i++)
             {
-                allowedTypes.Add(new ContentTypeSort
-                {
-                    Id = new Lazy<int>(() => GetByAlias(allowedTypeAlias).Id),
-                    Alias = allowedTypeAlias
-                });
+                var allowedTypeAlias = allowedTypeAliases[i];
+                allowedTypes.Add(new ContentTypeSort(new Lazy<int>(() => GetByAlias(allowedTypeAlias).Id), i, allowedTypeAlias));
             }
 
             ct.AllowedContentTypes = allowedTypes;
