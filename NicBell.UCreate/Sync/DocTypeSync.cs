@@ -62,7 +62,7 @@ namespace NicBell.UCreate.Sync
                 var template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
                 if (template == null)
                 {
-                    ApplicationContext.Current.Services.FileService.SaveTemplate(new Template("-1", templateAlias, templateAlias));
+                    ApplicationContext.Current.Services.FileService.SaveTemplate(new Template(templateAlias, templateAlias));
                     template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
                 }
                 templates.Add(template);

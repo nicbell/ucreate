@@ -31,7 +31,7 @@ namespace NicBell.UCreate.Sync
         {
             var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DataTypeAttribute) as DataTypeAttribute;
             var instance = Activator.CreateInstance(itemType, null);
-            var dt = Service.GetDataTypeDefinitionById(new Guid(attr.Key)) ?? new DataTypeDefinition(-1, attr.EditorAlias) { Key = new Guid(attr.Key) };
+            var dt = Service.GetDataTypeDefinitionById(new Guid(attr.Key)) ?? new DataTypeDefinition(attr.EditorAlias) { Key = new Guid(attr.Key) };
 
             dt.Name = attr.Name;
             dt.DatabaseType = attr.DBType;
