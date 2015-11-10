@@ -34,7 +34,7 @@ namespace NicBell.UCreate.Sync
 
             SetParent(ct, itemType);
             MapProperties(ct, itemType);
-            SetTemplates(ct, attr.AllowedTemplates, attr.DefaultTemplate); //
+            SetTemplates(ct, itemType, attr.AllowedTemplates, attr.DefaultTemplate);
 
             Service.Save(ct);
         }
@@ -44,14 +44,15 @@ namespace NicBell.UCreate.Sync
         /// Set templates for doctypes
         /// </summary>
         /// <param name="ct"></param>
+        /// <param name="itemType"></param>
         /// <param name="allowedTemplates"></param>
         /// <param name="defaultTemplate"></param>
-        private void SetTemplates(IContentType ct, string[] allowedTemplates, string defaultTemplate)
+        private void SetTemplates(IContentType ct, Type itemType, string[] allowedTemplates, string defaultTemplate)
         {
             if (allowedTemplates == null || allowedTemplates.Length == 0)
                 return;
 
-            if (String.IsNullOrEmpty(defaultTemplate))
+            if (string.IsNullOrEmpty(defaultTemplate))
                 defaultTemplate = allowedTemplates.First();
 
 
@@ -59,17 +60,36 @@ namespace NicBell.UCreate.Sync
 
             foreach (var templateAlias in allowedTemplates)
             {
-                var template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
-                if (template == null)
-                {
-                    ApplicationContext.Current.Services.FileService.SaveTemplate(new Template(templateAlias, templateAlias));
-                    template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
-                }
+                var template = GetOrCreateTemplate(itemType, templateAlias);
                 templates.Add(template);
             }
 
             ct.AllowedTemplates = templates;
             ct.SetDefaultTemplate(templates.First(x => x.Alias == defaultTemplate));
+        }
+
+
+        /// <summary>
+        /// Creates a template
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="templateAlias"></param>
+        /// <returns></returns>
+        private ITemplate GetOrCreateTemplate(Type itemType, string templateAlias)
+        {
+            var template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
+
+            if (template == null)
+            {
+                template = new Template(templateAlias, templateAlias);
+                //TODO: read file system for existing template.
+                template.Content = "@inherits UmbracoTemplatePage<" + itemType.FullName + ">\n\n<h1>@Model.Content.Name</h1>";
+
+                ApplicationContext.Current.Services.FileService.SaveTemplate(template);
+                template = ApplicationContext.Current.Services.FileService.GetTemplate(templateAlias);
+            }
+
+            return template;
         }
     }
 }
