@@ -21,12 +21,10 @@ namespace NicBell.UCreate.Helpers
             var fileName = Path.Combine(HttpContext.Current.Server.MapPath("~/app_data/"), SyncVersionFile);
 
             using (var myFile = File.Open(fileName, FileMode.Create))
+            using (var writer = new StreamWriter(myFile))
             {
-                using (var writer = new StreamWriter(myFile))
-                {
-                    var json = JsonConvert.SerializeObject(assemblyVersions);
-                    writer.Write(json);
-                }
+                var json = JsonConvert.SerializeObject(assemblyVersions);
+                writer.Write(json);
             }
         }
 
@@ -43,12 +41,10 @@ namespace NicBell.UCreate.Helpers
             if (File.Exists(fileName))
             {
                 using (var stream = File.OpenText(fileName))
+                using (var reader = new JsonTextReader(stream))
                 {
-                    using (var reader = new JsonTextReader(stream))
-                    {
-                        var entries = new JsonSerializer().Deserialize<List<AssemblyVersion>>(reader);
-                        return assemblyVersions.SequenceEqual(entries);
-                    }
+                    var entries = new JsonSerializer().Deserialize<List<AssemblyVersion>>(reader);
+                    return assemblyVersions.SequenceEqual(entries);
                 }
             }
 
