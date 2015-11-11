@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Hosting;
 using Umbraco.Core;
+using Umbraco.Core.Configuration;
 using Umbraco.Core.Models;
 
 namespace NicBell.UCreate.Sync
@@ -78,17 +79,29 @@ namespace NicBell.UCreate.Sync
         /// <returns></returns>
         private static ITemplate CreateTemplate(Type itemType, string templateAlias)
         {
-            var template = new Template(templateAlias, templateAlias)
-            {
-                Content = "@inherits UmbracoTemplatePage<" + itemType.FullName + ">\n\n<h1>@Model.Content.Name</h1>",
-                Path = string.Format("~/Views/{0}.cshtml", templateAlias)
-            };
+            var renderingEngine = UmbracoConfig.For.UmbracoSettings().Templates.DefaultRenderingEngine;
+            var template = new Template(templateAlias, templateAlias);
 
-            var templateDiskPath = HostingEnvironment.MapPath(template.Path);
-
-            if (System.IO.File.Exists(templateDiskPath))
+            if (renderingEngine == RenderingEngine.Mvc)
             {
-                template.Content = System.IO.File.ReadAllText(templateDiskPath);
+                template.Content = "@inherits UmbracoTemplatePage<" + itemType.FullName + ">\n\n<h1>@Model.Content.Name</h1>";
+                template.Path = string.Format("~/Views/{0}.cshtml", templateAlias);
+            }
+            else if (renderingEngine == RenderingEngine.WebForms)
+            {
+                template.Content = "<%@ Master Language=\"C#\" AutoEventWireup=\"true\" %>\n\n<h1><umbraco:item field=\"pageName\" runat=\"server\" /></h1>";
+                template.Path = string.Format("~/masterpages/{0}.master", templateAlias);
+            }
+
+            // Try read existing content
+            if (!string.IsNullOrEmpty(template.Path))
+            {
+                var templateDiskPath = HostingEnvironment.MapPath(template.Path);
+
+                if (System.IO.File.Exists(templateDiskPath))
+                {
+                    template.Content = System.IO.File.ReadAllText(templateDiskPath);
+                }
             }
 
             ApplicationContext.Current.Services.FileService.SaveTemplate(template);
