@@ -1,4 +1,4 @@
-UCreate [![Build status](https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q)](https://ci.appveyor.com/project/nicbell/ucreate) [![Nuget](https://img.shields.io/nuget/dt/ucreate.svg)](https://www.nuget.org/packages/UCreate/)
+UCreate [![Build status](https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q?svg=true)](https://ci.appveyor.com/project/nicbell/ucreate) [![Nuget](https://img.shields.io/nuget/dt/ucreate.svg)](https://www.nuget.org/packages/UCreate/)
 =======
 
 Create doc types, media types, data types, member types and member groups for Umbraco 7 using a code-first approach. Inspired by [USiteBuilder](https://github.com/spopovic/uSiteBuilder).
