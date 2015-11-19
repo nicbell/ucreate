@@ -80,27 +80,26 @@ namespace NicBell.UCreate.Sync
         private static ITemplate CreateTemplate(Type itemType, string templateAlias)
         {
             var renderingEngine = UmbracoConfig.For.UmbracoSettings().Templates.DefaultRenderingEngine;
+            var templateLocation = string.Empty;
             var template = new Template(templateAlias, templateAlias);
 
             if (renderingEngine == RenderingEngine.Mvc)
             {
                 template.Content = "@inherits UmbracoTemplatePage<" + itemType.FullName + ">\n\n<h1>@Model.Content.Name</h1>";
-                template.Path = string.Format("~/Views/{0}.cshtml", templateAlias);
+                templateLocation = HostingEnvironment.MapPath(string.Format("~/Views/{0}.cshtml", templateAlias));
             }
             else if (renderingEngine == RenderingEngine.WebForms)
             {
                 template.Content = "<%@ Master Language=\"C#\" AutoEventWireup=\"true\" %>\n\n<h1><umbraco:item field=\"pageName\" runat=\"server\" /></h1>";
-                template.Path = string.Format("~/masterpages/{0}.master", templateAlias);
+                templateLocation = HostingEnvironment.MapPath(string.Format("~/masterpages/{0}.master", templateAlias));
             }
 
             // Try read existing content
             if (!string.IsNullOrEmpty(template.Path))
             {
-                var templateDiskPath = HostingEnvironment.MapPath(template.Path);
-
-                if (System.IO.File.Exists(templateDiskPath))
+                if (System.IO.File.Exists(templateLocation))
                 {
-                    template.Content = System.IO.File.ReadAllText(templateDiskPath);
+                    template.Content = System.IO.File.ReadAllText(templateLocation);
                 }
             }
 
