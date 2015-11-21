@@ -3,10 +3,13 @@ using NicBell.UCreate.Constants;
 using NicBell.UCreate.Converters;
 using NicBell.UCreate.Test.Converters;
 using NicBell.UCreate.Test.DataTypes;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using Umbraco.Core.Models;
+using Umbraco.Web;
 
 namespace NicBell.UCreate.Test.DocumentTypes
 {
@@ -22,7 +25,7 @@ namespace NicBell.UCreate.Test.DocumentTypes
         { }
 
         [TypeConverter(typeof(ArchetypeListConverter<Thing>))]
-        [Property(Alias = "someThings", Name = "Some Things", TypeName = "Things", TabName = "Content", Mandatory = true)]
+        [Property(Alias = "someThings", Name = "Some Things", TypeName = "Things", TabName = "Things", Mandatory = true)]
         public List<Thing> Things { get; set; }
 
         [Property(Alias = "someCopy", Name = "Some Copy", TypeName = PropertyTypes.Richtexteditor, TabName = "Content", Mandatory = true)]
@@ -35,5 +38,24 @@ namespace NicBell.UCreate.Test.DocumentTypes
         [TypeConverter(typeof(RelatedLinksConverter))]
         [Property(Alias = "someLinks", Name = "Some Links", TypeName = PropertyTypes.RelatedLinks, TabName = "Content", Mandatory = true)]
         public List<RelatedLink> SomeLinks { get; set; }
+
+        [TypeConverter(typeof(IdListConverter))]
+        [Property(Alias = "promotedPosts", Name = "Promoted Posts", TypeName = "Blog Post Picker", TabName = "Promoted Posts", Mandatory = true)]
+        public List<int> PromotedPostsIds { get; set; }
+
+
+        /// <summary>
+        /// Get the data when we need otherwise we may end up querying everything at once and end up with a chicken and egg.
+        /// </summary>
+        public Lazy<List<BlogItem>> PromotedPosts
+        {
+            get
+            {
+                return new Lazy<List<BlogItem>>(() =>
+                {
+                    return PromotedPostsIds.Select(x => new BlogItem(UmbracoContext.Current.ContentCache.GetById(x))).ToList();
+                });
+            }
+        }
     }
 }

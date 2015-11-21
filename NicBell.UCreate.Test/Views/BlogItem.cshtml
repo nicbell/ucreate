@@ -1,27 +1,18 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<BlogItem>
+﻿@inherits UmbracoTemplatePage<BlogItem>
 
 @using NicBell.UCreate.Test.DocumentTypes
 
 @{
-    Layout = null;
+    Layout = "_Layout.cshtml";
+    ViewBag.Title = Model.Content.MetaTitle;
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>BlogItem</title>
-</head>
-<body>
-    <div>
-        <article>
-            <h1>@Model.Content.ItemTitle</h1>
-            <h6><time datetime="@Model.Content.ItemDate.ToString("yyyy-MM-dd")">@Model.Content.ItemDate.ToString("ddd, dd MMM yyyy")</time></h6>
+<article>
+    <h1>@Model.Content.ItemTitle</h1>
+    <h6><time datetime="@Model.Content.ItemDate.ToString("yyyy-MM-dd")">@Model.Content.ItemDate.ToString("ddd, dd MMM yyyy")</time></h6>
 
-            @Html.Raw(Model.Content.Intro)
-            @Html.Raw(Model.Content.Body)
-        </article>
-    </div>
-</body>
-</html>
+    @Html.Raw(Model.Content.Intro)
+    @Html.Raw(Model.Content.Body)
+</article>
+

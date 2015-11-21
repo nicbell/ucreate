@@ -302,8 +302,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ArchetypeListConverter.cs" />
+    <Compile Include="Converters\IdListConverter.cs" />
     <Compile Include="Converters\ValueListConverter.cs" />
     <Compile Include="DataTypes\TagPicker.cs" />
+    <Compile Include="DataTypes\BlogPostPicker.cs" />
     <Compile Include="DataTypes\Things.cs" />
     <Compile Include="DocumentTypes\Base.cs" />
     <Compile Include="DocumentTypes\BlogIndex.cs" />
@@ -501,6 +503,12 @@
   <ItemGroup>
     <Content Include="config\404handlers.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_Nav.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -542,4 +550,3 @@
   <Target Name="AfterBuild">
   </Target> -->
 </Project>
-

@@ -1,0 +1,15 @@
+﻿@inherits UmbracoViewPage
+
+@using NicBell.UCreate.Test.DocumentTypes
+
+@{
+    var home = Model.AncestorOrSelf<Home>(1);
+}
+
+<ul class="nav navbar-nav">
+    <li><a href="@home.Url">@home.Name</a></li>
+    @foreach (var item in home.Children)
+    {
+        <li><a href="@item.Url">@item.Name</a></li>
+    }
+</ul>

@@ -1,27 +1,19 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<BlogIndex>
+﻿@inherits UmbracoTemplatePage<BlogIndex>
 
 @using NicBell.UCreate.Test.DocumentTypes
 
 @{
-    Layout = null;
+    Layout = "_Layout.cshtml";
+    ViewBag.Title = Model.Content.MetaTitle;
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>BlogItem</title>
-</head>
-<body>
-    <div>
-        <h4>Blog Posts</h4>
-        <ul>
-            @foreach (var page in Model.Content.Children<BlogItem>())
-            {
-                <li><a href="@page.Url">@page.ItemTitle</a></li>
-            }
-        </ul>
-    </div>
-</body>
-</html>
+<div class="jumbotron">
+    <h1>@Model.Content.Name</h1>
+</div>
+<ul>
+    @foreach (var page in Model.Content.Children<BlogItem>())
+    {
+        <li><a href="@page.Url">@page.ItemTitle</a></li>
+    }
+</ul>
