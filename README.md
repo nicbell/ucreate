@@ -126,7 +126,7 @@ In order to use your doc types on the front-end you need to enable the `Publishe
 ```
 Then using the doc types in your views is pretty simple.
 ```html
-@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<NicBell.UCreate.Test.DocTypes.PageWithTitle>
+@inherits UmbracoTemplatePage<PageWithTitle>
 
 @{
     Layout = null;
