@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace NicBell.UCreate.Test.Converters
 {
-    public class NiceColorConverter : TypeConverter
+    public class NiceColorConverter : ColorConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -18,13 +18,14 @@ namespace NicBell.UCreate.Test.Converters
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string || value is int)
-                return ColorTranslator.FromHtml("#" + value.ToString());
-
             if (value == null)
                 return Color.Empty;
 
-            return base.ConvertFrom(context, culture, value);
+            if (value is string && string.IsNullOrEmpty(value.ToString()))
+                return Color.Empty;
+
+            // Standard ColorConverter needs #
+            return base.ConvertFrom(context, culture, "#" + value.ToString());
         }
     }
 }
