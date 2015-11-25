@@ -5,7 +5,7 @@
     <title>UCreate by nicbell</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -20,7 +20,7 @@
 
     <section class="main-content">
       <h1>
-<a id="ucreate-" class="anchor" href="#ucreate-" aria-hidden="true"><span class="octicon octicon-link"></span></a>UCreate <a href="https://ci.appveyor.com/project/nicbell/ucreate"><img src="https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q" alt="Build status"></a>
+<a id="ucreate--" class="anchor" href="#ucreate--" aria-hidden="true"><span class="octicon octicon-link"></span></a>UCreate <a href="https://ci.appveyor.com/project/nicbell/ucreate"><img src="https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q?svg=true" alt="Build status"></a> <a href="https://www.nuget.org/packages/UCreate/"><img src="https://img.shields.io/nuget/dt/ucreate.svg" alt="Nuget"></a>
 </h1>
 
 <p>Create doc types, media types, data types, member types and member groups for Umbraco 7 using a code-first approach. Inspired by <a href="https://github.com/spopovic/uSiteBuilder">USiteBuilder</a>.</p>
@@ -36,7 +36,7 @@
 
 <p>The only configuration you'll need to get started is an app setting in your <code>web.config</code>. This tells UCreate to sync your doc types, media types, data types, member types and member groups on application start.</p>
 
-<div class="highlight highlight-xml"><pre>...
+<div class="highlight highlight-text-xml"><pre>...
 &lt;<span class="pl-ent">appSettings</span>&gt;
     ...
     &lt;<span class="pl-ent">add</span> <span class="pl-e">key</span>=<span class="pl-s"><span class="pl-pds">"</span>UCreateSyncEnabled<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> /&gt;
@@ -49,7 +49,7 @@
 
 <p>Doc types support property inheritance. Here is a list of available <a href="http://nicbell.github.io/ucreate/icons.html">icons</a>.</p>
 
-<div class="highlight highlight-csharp"><pre>[DocType(Name = <span class="pl-s"><span class="pl-pds">"</span>Page With Title<span class="pl-pds">"</span></span>,
+<div class="highlight highlight-source-cs"><pre>[DocType(Name = <span class="pl-s"><span class="pl-pds">"</span>Page With Title<span class="pl-pds">"</span></span>,
     Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-zip color-blue<span class="pl-pds">"</span></span>,
     AllowedAsRoot = <span class="pl-c1">true</span>,
     AllowedTemplates = <span class="pl-k">new</span>[] { <span class="pl-s"><span class="pl-pds">"</span>PageWithTitle<span class="pl-pds">"</span></span> },
@@ -68,7 +68,7 @@
 
 <p>Media types support property inheritance.</p>
 
-<div class="highlight highlight-csharp"><pre>[MediaType(Name = <span class="pl-s"><span class="pl-pds">"</span>Folder With Cover<span class="pl-pds">"</span></span>,
+<div class="highlight highlight-source-cs"><pre>[MediaType(Name = <span class="pl-s"><span class="pl-pds">"</span>Folder With Cover<span class="pl-pds">"</span></span>,
     Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-folder color-blue<span class="pl-pds">"</span></span>,
     AllowedAsRoot = <span class="pl-c1">true</span>,
     IsContainer = <span class="pl-c1">true</span>,
@@ -82,7 +82,7 @@
 <h2>
 <a id="datatype-with-prevalues-example" class="anchor" href="#datatype-with-prevalues-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>DataType with prevalues example</h2>
 
-<div class="highlight highlight-csharp"><pre>[DataType(EditorAlias = Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias,
+<div class="highlight highlight-source-cs"><pre>[DataType(EditorAlias = Umbraco.Core.Constants.PropertyEditors.ColorPickerAlias,
     Name = <span class="pl-s"><span class="pl-pds">"</span>Nice Color Picker<span class="pl-pds">"</span></span>,
     Key = <span class="pl-s"><span class="pl-pds">"</span>1bfca1e7-95d0-485e-bd94-9fe9c2b8821f<span class="pl-pds">"</span></span>,
     DBType = DataTypeDatabaseType.Nvarchar)]
@@ -108,7 +108,7 @@
 <h2>
 <a id="membertype-example" class="anchor" href="#membertype-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>MemberType example</h2>
 
-<div class="highlight highlight-csharp"><pre>[MemberType(Name = <span class="pl-s"><span class="pl-pds">"</span>Employee<span class="pl-pds">"</span></span>, Description = <span class="pl-s"><span class="pl-pds">"</span>Member who represents an employee<span class="pl-pds">"</span></span>, Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-user color-green<span class="pl-pds">"</span></span>)]
+<div class="highlight highlight-source-cs"><pre>[MemberType(Name = <span class="pl-s"><span class="pl-pds">"</span>Employee<span class="pl-pds">"</span></span>, Description = <span class="pl-s"><span class="pl-pds">"</span>Member who represents an employee<span class="pl-pds">"</span></span>, Icon = <span class="pl-s"><span class="pl-pds">"</span>icon-user color-green<span class="pl-pds">"</span></span>)]
 <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Employee</span>
 {
     [MemberProperty(Alias = <span class="pl-s"><span class="pl-pds">"</span>jobTitle<span class="pl-pds">"</span></span>, TypeName = PropertyTypes.Textstring, Description = <span class="pl-s"><span class="pl-pds">"</span>Employee's job title<span class="pl-pds">"</span></span>, Mandatory = <span class="pl-c1">true</span>, TabName = <span class="pl-s"><span class="pl-pds">"</span>Job Details<span class="pl-pds">"</span></span>, CanEdit = <span class="pl-c1">true</span>, ShowOnProfile = <span class="pl-c1">true</span>)]
@@ -124,7 +124,7 @@
 <h2>
 <a id="membergroup-example" class="anchor" href="#membergroup-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>MemberGroup example</h2>
 
-<div class="highlight highlight-csharp"><pre>[MemberGroup(Name = <span class="pl-s"><span class="pl-pds">"</span>Staff<span class="pl-pds">"</span></span>)]
+<div class="highlight highlight-source-cs"><pre>[MemberGroup(Name = <span class="pl-s"><span class="pl-pds">"</span>Staff<span class="pl-pds">"</span></span>)]
 <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Staff</span>
 {
 }</pre></div>
@@ -134,7 +134,7 @@
 
 <p>In order to use your doc types on the front-end you need to enable the <code>PublishedContentModel</code> factory. UCreate can do this for you if add the following app setting:</p>
 
-<div class="highlight highlight-xml"><pre>...
+<div class="highlight highlight-text-xml"><pre>...
 &lt;<span class="pl-ent">appSettings</span>&gt;
     ...
     &lt;<span class="pl-ent">add</span> <span class="pl-e">key</span>=<span class="pl-s"><span class="pl-pds">"</span>UCreatePublishedModelsEnabled<span class="pl-pds">"</span></span> <span class="pl-e">value</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span> /&gt;
@@ -144,7 +144,7 @@
 
 <p>Then using the doc types in your views is pretty simple.</p>
 
-<div class="highlight highlight-html"><pre>@inherits Umbraco.Web.Mvc.UmbracoTemplatePage&lt;<span class="pl-ent">NicBell</span>.<span class="pl-e">UCreate</span>.<span class="pl-e">Test</span>.<span class="pl-e">DocTypes</span>.<span class="pl-e">PageWithTitle</span>&gt;
+<div class="highlight highlight-text-html-basic"><pre>@inherits UmbracoTemplatePage&lt;<span class="pl-ent">PageWithTitle</span>&gt;
 
 @{
     Layout = null;
@@ -182,4 +182,3 @@
 
   </body>
 </html>
-
