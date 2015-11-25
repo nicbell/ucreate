@@ -95,7 +95,7 @@ namespace NicBell.UCreate.Sync
             }
 
             // Try read existing content
-            if (!string.IsNullOrEmpty(template.Path))
+            if (!string.IsNullOrEmpty(templateLocation))
             {
                 if (System.IO.File.Exists(templateLocation))
                 {

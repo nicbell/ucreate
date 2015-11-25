@@ -40,7 +40,7 @@ namespace NicBell.UCreate.Test.DocumentTypes
         public List<RelatedLink> SomeLinks { get; set; }
 
         [TypeConverter(typeof(IdListConverter))]
-        [Property(Alias = "promotedPosts", Name = "Promoted Posts", TypeName = "Blog Post Picker", TabName = "Promoted Posts", Mandatory = true)]
+        [Property(Alias = "promotedPosts", Name = "Promoted Posts", TypeName = "Blog Post Picker", TabName = "Promoted Posts", Mandatory = false)]
         public List<int> PromotedPostsIds { get; set; }
 
 
