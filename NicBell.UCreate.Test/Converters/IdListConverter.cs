@@ -9,11 +9,14 @@ namespace NicBell.UCreate.Test.Converters
     {
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
+            if (value == null)
+                value = string.Empty;
+
             if (value is string || value is int)
             {
                 var list = new List<int>();
 
-                if (value != null && !string.IsNullOrEmpty(value.ToString()))
+                if (!string.IsNullOrEmpty(value.ToString()))
                 {
                     list.AddRange(value.ToString().Trim().Split(',').Select(int.Parse).ToList());
                 }
