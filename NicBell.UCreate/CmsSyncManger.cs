@@ -51,7 +51,7 @@ namespace NicBell.UCreate
             memberGroupSync.SyncAll();
 
             //Syncing tasks that user wants to run.
-            var syncTaskTypes = ReflectionHelper.GetTypesThatImplementInterface(typeof(ISyncTask));
+            var syncTaskTypes = ReflectionHelper.GetTypesThatImplementInterface<ISyncTask>();
 
             foreach (var task in syncTaskTypes.Select(syncTaskType => Activator.CreateInstance(syncTaskType) as ISyncTask))
             {

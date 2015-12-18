@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Hosting;
 using Umbraco.Core;
 using Umbraco.Core.Configuration;
@@ -24,7 +25,7 @@ namespace NicBell.UCreate.Sync
         public override void Save(Type itemType)
         {
             var contentTypes = Service.GetAllContentTypes();
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DocTypeAttribute) as DocTypeAttribute;
+            var attr = itemType.GetCustomAttribute<DocTypeAttribute>();
             var ct = contentTypes.FirstOrDefault(x => x.Alias == itemType.Name) ?? new ContentType(-1);
 
             ct.Name = attr.Name;

@@ -1,7 +1,7 @@
 ﻿using NicBell.UCreate.Attributes;
+using NicBell.UCreate.Helpers;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Models;
@@ -24,14 +24,16 @@ namespace NicBell.UCreate.Models
         /// <param name="content"></param>
         private void SetValues(IPublishedContent content)
         {
-            foreach (var property in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(prop => Attribute.IsDefined(prop, typeof(PropertyAttribute), false)))
+            var properties = ReflectionHelper.GetPropertiesWithAttribute<PropertyAttribute>(GetType(), bindingFlags: BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in properties)
             {
                 var alias = property.GetCustomAttribute<PropertyAttribute>(false).Alias;
                 var publishedProperty = content.GetProperty(alias);
 
                 //Local links cause stack overflow when accessing value during publish.
                 //Use @Html.Raw(TemplateUtilities.ParseInternalLinks(value)) to resolve these URLs on the template.
-                if (publishedProperty.DataValue is String && (publishedProperty.DataValue as String).Contains("localLink"))
+                if (publishedProperty.DataValue is string && (publishedProperty.DataValue as string).Contains("localLink"))
                 {
                     SetValue(property, publishedProperty.DataValue);
                 }
@@ -51,11 +53,11 @@ namespace NicBell.UCreate.Models
         private void SetValue(PropertyInfo property, object value)
         {
             //Check for type converter..
-            if (Attribute.IsDefined(property, typeof(TypeConverterAttribute)))
+            if (property.IsDefined(typeof(TypeConverterAttribute)))
             {
                 var converterAttr = property.GetCustomAttribute<TypeConverterAttribute>();
                 var converter = Activator.CreateInstance(Type.GetType(converterAttr.ConverterTypeName)) as TypeConverter;
-                property.SetValue(this, converter.ConvertFrom(value ?? String.Empty));
+                property.SetValue(this, converter.ConvertFrom(value ?? string.Empty));
             }
             else
             {

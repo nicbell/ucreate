@@ -38,7 +38,11 @@ namespace NicBell.UCreate.Attributes
             this.Name = name;
         }
 
-
+   
+        /// <summary>
+        /// Generates umbraco PropertyType from attribute values
+        /// </summary>
+        /// <returns></returns>
         public PropertyType GetPropertyType()
         {
             var propType = new PropertyType(new DataTypeSync().GetDataType(TypeName))

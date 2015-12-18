@@ -1,4 +1,5 @@
 ﻿using NicBell.UCreate.Attributes;
+using NicBell.UCreate.Helpers;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -29,7 +30,7 @@ namespace NicBell.UCreate.Sync
         public override void Save(Type itemType)
         {
             var memberTypes = Service.GetAll();
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MemberTypeAttribute) as MemberTypeAttribute;
+            var attr = itemType.GetCustomAttribute<MemberTypeAttribute>();
             var mt = memberTypes.FirstOrDefault(x => x.Alias == itemType.Name) ?? new MemberType(-1);
 
             mt.Name = attr.Name;
@@ -40,9 +41,8 @@ namespace NicBell.UCreate.Sync
             MapProperties(mt, itemType);
 
             //Set member specific properties
-            var memberProperties = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                                .Select(x => Attribute.GetCustomAttribute(x, typeof (MemberPropertyAttribute), false))
-                                .OfType<MemberPropertyAttribute>();
+            var memberProperties = ReflectionHelper.GetPropertiesWithAttribute<MemberPropertyAttribute>(itemType)
+                .Select(prop => prop.GetCustomAttribute<MemberPropertyAttribute>(false));
 
             foreach (var memberProperty in memberProperties)
             {

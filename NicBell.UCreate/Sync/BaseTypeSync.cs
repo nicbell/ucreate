@@ -17,7 +17,7 @@ namespace NicBell.UCreate.Sync
             {
                 if (_typesToSync == null)
                 {
-                    _typesToSync = ReflectionHelper.GetTypesWithAttribute(typeof(T));
+                    _typesToSync = ReflectionHelper.GetTypesWithAttribute<T>();
 
                 }
 

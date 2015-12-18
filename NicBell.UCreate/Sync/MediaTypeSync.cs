@@ -1,6 +1,7 @@
 ﻿using NicBell.UCreate.Attributes;
 using System;
 using System.Linq;
+using System.Reflection;
 using Umbraco.Core.Models;
 
 namespace NicBell.UCreate.Sync
@@ -20,7 +21,7 @@ namespace NicBell.UCreate.Sync
         public override void Save(Type itemType)
         {
             var mediaTypes = Service.GetAllMediaTypes();
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is MediaTypeAttribute) as MediaTypeAttribute;
+            var attr = itemType.GetCustomAttribute<MediaTypeAttribute>();
             var mt = mediaTypes.FirstOrDefault(x => x.Alias == itemType.Name) ?? new MediaType(-1);
 
             mt.Name = attr.Name;

@@ -1,4 +1,5 @@
 ﻿using NicBell.UCreate.Attributes;
+using NicBell.UCreate.Helpers;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -16,9 +17,11 @@ namespace NicBell.UCreate.Sync
         /// <param name="overwrite"></param>
         protected void MapProperties(IContentTypeBase ct, Type itemType)
         {
-            foreach (PropertyInfo propInfo in itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).Where(prop => Attribute.IsDefined(prop, typeof(PropertyAttribute), false)))
+            var propAttrs = ReflectionHelper.GetPropertiesWithAttribute<PropertyAttribute>(itemType)
+                .Select(prop => prop.GetCustomAttribute<PropertyAttribute>(false));
+
+            foreach (var propAttr in propAttrs)
             {
-                var propAttr = propInfo.GetCustomAttribute<PropertyAttribute>(false);
                 var newProp = propAttr.GetPropertyType();
 
                 if (ct.PropertyTypeExists(propAttr.Alias))
@@ -31,14 +34,14 @@ namespace NicBell.UCreate.Sync
                     existingProp.Mandatory = newProp.Mandatory;
                     existingProp.ValidationRegExp = newProp.ValidationRegExp;
 
-                    if (!String.IsNullOrEmpty(propAttr.TabName))
+                    if (!string.IsNullOrEmpty(propAttr.TabName))
                     {
                         ct.MovePropertyType(propAttr.Alias, propAttr.TabName);
                     }
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(propAttr.TabName))
+                    if (!string.IsNullOrEmpty(propAttr.TabName))
                     {
                         ct.AddPropertyGroup(propAttr.TabName);
                         ct.AddPropertyType(newProp, propAttr.TabName);

@@ -2,7 +2,7 @@
 using NicBell.UCreate.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
@@ -29,7 +29,7 @@ namespace NicBell.UCreate.Sync
         /// <param name="itemType"></param>
         public override void Save(Type itemType)
         {
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is DataTypeAttribute) as DataTypeAttribute;
+            var attr = itemType.GetCustomAttribute<DataTypeAttribute>();
             var instance = Activator.CreateInstance(itemType, null);
             var dt = Service.GetDataTypeDefinitionById(new Guid(attr.Key)) ?? new DataTypeDefinition(attr.EditorAlias) { Key = new Guid(attr.Key) };
 

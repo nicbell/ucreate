@@ -12,11 +12,11 @@ namespace NicBell.UCreate.Helpers
         /// </summary>
         /// <param name="interfaceType"></param>
         /// <returns></returns>
-        public static List<Type> GetTypesThatImplementInterface(Type interfaceType)
+        public static List<Type> GetTypesThatImplementInterface<T>()
         {
             return GetDependentAssemblies(Assembly.GetExecutingAssembly())
                 .SelectMany(x => x.GetTypes())
-                .Where(t => interfaceType.IsAssignableFrom(t) && t.IsClass)
+                .Where(t => typeof(T).IsAssignableFrom(t) && t.IsClass)
                 .ToList();
         }
 
@@ -26,12 +26,26 @@ namespace NicBell.UCreate.Helpers
         /// </summary>
         /// <param name="attributeType"></param>
         /// <returns></returns>
-        public static List<Type> GetTypesWithAttribute(Type attributeType)
+        public static List<Type> GetTypesWithAttribute<T>() where T : Attribute
         {
             return GetDependentAssemblies(Assembly.GetExecutingAssembly())
                  .SelectMany(x => x.GetTypes())
-                 .Where(t => Attribute.IsDefined(t, attributeType))
+                 .Where(t => t.IsDefined(typeof(T)))
                  .ToList();
+        }
+
+
+        /// <summary>
+        /// Gets all properties of a type with an attribute
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="attributeType"></param>
+        /// <returns></returns>
+        public static List<PropertyInfo> GetPropertiesWithAttribute<T>(Type itemType, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, bool inherit = false) where T : Attribute
+        {
+            return itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                    .Where(prop => prop.IsDefined(typeof(T), inherit))
+                    .ToList();
         }
 
 

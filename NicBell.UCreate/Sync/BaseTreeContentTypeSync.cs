@@ -1,6 +1,7 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Models;
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
@@ -72,7 +73,7 @@ namespace NicBell.UCreate.Sync
         /// <param name="itemType"></param>
         public void SaveAllowedTypes(Type itemType)
         {
-            var attr = Attribute.GetCustomAttributes(itemType).FirstOrDefault(x => x is T) as T;
+            var attr = itemType.GetCustomAttribute<T>();
             var ct = GetByAlias(itemType.Name);
             MapAllowedTypes(ct, attr.AllowedTypes);
 
@@ -116,7 +117,7 @@ namespace NicBell.UCreate.Sync
         /// <param name="ct"></param>
         protected void SetParent(IContentTypeComposition ct, Type itemType)
         {
-            var parentAttr = Attribute.GetCustomAttributes(itemType.BaseType).FirstOrDefault(x => x is BaseContentTypeAttribute) as BaseContentTypeAttribute;
+            var parentAttr = itemType.BaseType.GetCustomAttributes().FirstOrDefault(x => x is BaseContentTypeAttribute) as BaseContentTypeAttribute;
 
             if (parentAttr != null)
             {
