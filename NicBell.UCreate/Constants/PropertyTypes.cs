@@ -25,7 +25,9 @@ namespace NicBell.UCreate.Constants
         public const string RelatedLinks = "Related Links";
         public const string Richtexteditor = "Richtext editor";
         public const string Tags = "Tags";
+        [Obsolete("From Umbraco 7.4 use PropertyTypes.TextArea")]
         public const string Textboxmultiple = "Textbox multiple";
+        public const string Textarea = "Textarea";
         public const string Textstring = "Textstring";
         public const string TrueFalse = "True/false";
         public const string Upload = "Upload";

@@ -45,7 +45,11 @@ namespace NicBell.UCreate.Attributes
         /// <returns></returns>
         public PropertyType GetPropertyType()
         {
-            var propType = new PropertyType(new DataTypeSync().GetDataType(TypeName))
+            var dataType = new DataTypeSync().GetDataType(TypeName);
+            if(dataType == null)
+                throw new Exception($"Failed to find data type with name: {TypeName} for property: {Name}");
+
+            var propType = new PropertyType(dataType)
             {
                 Alias = Alias,
                 Name = Name,
