@@ -9,7 +9,16 @@
 #---------------------------------#
 
 # version format
-version: 0.0.{build}
+version: {branch}.{build}
+
+skip_non_tags: true
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{branch}"
 
 #---------------------------------#
 #    environment configuration    #
@@ -21,6 +30,7 @@ os: Windows Server 2012
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
+
 
 # build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform: Any CPU
@@ -40,10 +50,8 @@ configuration: Release
 
 build:
   project: UCreate.sln             # path to Visual Studio solution or project
-  publish_wap: false               # package Web Application Projects (WAP) for Web Deploy
-  publish_wap_xcopy: false         # package Web Application Projects (WAP) for XCopy deployment
-  publish_azure: false             # package Azure Cloud Service projects and push to artifacts
   publish_nuget: true              # package projects with .nuspec files and push to artifacts
+  include_nuget_references: true
 
   # MSBuild verbosity level
   verbosity: normal
