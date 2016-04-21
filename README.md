@@ -51,7 +51,7 @@ Media types support property inheritance.
     Icon = "icon-folder color-blue",
     AllowedAsRoot = true,
     IsContainer = true,
-    AllowedTypes = new[] { "FolderWithCover", "Image" })]
+    AllowedChildTypes = new[] { typeof(FolderWithCover), typeof(Image) })]
 public class FolderWithCover
 {
     [Property(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]
