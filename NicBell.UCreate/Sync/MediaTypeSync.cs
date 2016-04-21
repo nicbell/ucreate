@@ -2,18 +2,38 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Umbraco.Core;
 using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace NicBell.UCreate.Sync
 {
     public class MediaTypeSync : BaseTreeContentTypeSync<MediaTypeAttribute>
     {
+        /// <summary>
+        /// Service
+        /// </summary>
+        public IContentTypeService Service
+        {
+            get
+            {
+                return ApplicationContext.Current.Services.ContentTypeService;
+            }
+        }
+
+
         public override IContentTypeComposition GetByAlias(string alias)
         {
             return Service.GetMediaType(alias);
         }
 
-        
+
+        public override void Save(IContentTypeBase ct)
+        {
+            Service.Save(ct as IMediaType);
+        }
+
+
         /// <summary>
         /// Saves
         /// </summary>
@@ -33,7 +53,7 @@ namespace NicBell.UCreate.Sync
             SetParent(mt, itemType);
             MapProperties(mt, itemType);
 
-            Service.Save(mt);
+            Save(mt);
         }
     }
 }

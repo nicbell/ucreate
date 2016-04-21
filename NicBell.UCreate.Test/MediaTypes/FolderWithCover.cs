@@ -3,13 +3,18 @@ using NicBell.UCreate.Constants;
 
 namespace NicBell.UCreate.Test.MediaTypes
 {
+    [MediaType(Name = "Image")]
+    public class Image
+    {
+    }
+
 
     [MediaType(
         Name = "Folder With Cover2",
         Icon = "icon-folder color-blue",
         AllowedAsRoot = true,
         IsContainer = true,
-        AllowedTypes = new[] { "FolderWithCover", "Image" })]
+        AllowedChildTypes = new[] { typeof(FolderWithCover), typeof(Image) })]
     public class FolderWithCover2 : FolderWithCover
     {
         [Property(Alias = "coverImage2", TypeName = PropertyTypes.MediaPicker, Description = "Cover image2.", Mandatory = true)]
@@ -22,7 +27,7 @@ namespace NicBell.UCreate.Test.MediaTypes
         Icon = "icon-folder color-blue",
         AllowedAsRoot = true,
         IsContainer = true,
-        AllowedTypes = new[] { "FolderWithCover", "Image" })]
+        AllowedChildTypes = new[] { typeof(FolderWithCover), typeof(Image) })]
     public class FolderWithCover
     {
         [Property(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]

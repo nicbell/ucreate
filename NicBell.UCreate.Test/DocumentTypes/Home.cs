@@ -17,7 +17,7 @@ namespace NicBell.UCreate.Test.DocumentTypes
         Icon = "icon-black icon-home",
         AllowedAsRoot = true,
         AllowedTemplates = new[] { "Home" },
-        AllowedTypes = new[] { "BlogIndex" })]
+        AllowedChildTypes = new[] { typeof(BlogIndex) })]
     public class Home : Base
     {
         public Home(IPublishedContent content)

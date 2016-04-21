@@ -10,7 +10,8 @@ namespace NicBell.UCreate.Test.DocumentTypes
 {
     [DocType(Name = "Blog Item",
         Icon = "icon-black icon-article",
-        AllowedTemplates = new[] { "BlogItem" })]
+        AllowedTemplates = new[] { "BlogItem" },
+        CompositionTypes = new[] { typeof(TaggedPage) })]
     public class BlogItem : Base
     {
         public BlogItem(IPublishedContent content)

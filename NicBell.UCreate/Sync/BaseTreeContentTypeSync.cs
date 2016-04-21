@@ -12,19 +12,13 @@ namespace NicBell.UCreate.Sync
 {
     public abstract class BaseTreeContentTypeSync<T> : BaseContentTypeSync<T> where T : BaseTreeContentTypeAttribute
     {
-        /// <summary>
-        /// Service
-        /// </summary>
-        public IContentTypeService Service
-        {
-            get
-            {
-                return ApplicationContext.Current.Services.ContentTypeService;
-            }
-        }
-
-
         public abstract IContentTypeComposition GetByAlias(string alias);
+
+        /// <summary>
+        /// Saves a content type, useful for updating
+        /// </summary>
+        /// <param name="ct"></param>
+        public abstract void Save(IContentTypeBase ct);
 
 
         /// <summary>
@@ -32,7 +26,7 @@ namespace NicBell.UCreate.Sync
         /// </summary>
         public override void SyncAll()
         {
-            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(Object) || x.BaseType == typeof(BaseDocType));
+            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(object) || x.BaseType == typeof(BaseDocType));
 
             foreach (var itemType in firstLevelTypes)
             {
@@ -42,6 +36,7 @@ namespace NicBell.UCreate.Sync
             foreach (var itemType in TypesToSync)
             {
                 SaveAllowedTypes(itemType);
+                SaveCompositions(itemType);
             }
         }
 
@@ -75,16 +70,9 @@ namespace NicBell.UCreate.Sync
         {
             var attr = itemType.GetCustomAttribute<T>();
             var ct = GetByAlias(itemType.Name);
-            MapAllowedTypes(ct, attr.AllowedTypes);
+            MapAllowedTypes(ct, attr.AllowedChildTypes);
 
-            if (ct is IMediaType)
-            { 
-                Service.Save(ct as IMediaType);
-            }
-            else if (ct is IContentType)
-            {
-                Service.Save(ct as IContentType);
-            }
+            Save(ct);
         }
 
 
@@ -93,20 +81,43 @@ namespace NicBell.UCreate.Sync
         /// </summary>
         /// <param name="ct"></param>
         /// <param name="allowedTypeAliases"></param>
-        protected void MapAllowedTypes(IContentTypeBase ct, string[] allowedTypeAliases)
+        protected void MapAllowedTypes(IContentTypeBase ct, Type[] allowedTypes)
         {
-            if (allowedTypeAliases == null || allowedTypeAliases.Length == 0)
+            if (allowedTypes == null || allowedTypes.Length == 0)
                 return;
 
-            var allowedTypes = new List<ContentTypeSort>();
+            var allowedContentTypes = new List<ContentTypeSort>();
 
-            for (int i = 0; i < allowedTypeAliases.Length; i++)
+            for (int i = 0; i < allowedTypes.Length; i++)
             {
-                var allowedTypeAlias = allowedTypeAliases[i];
-                allowedTypes.Add(new ContentTypeSort(new Lazy<int>(() => GetByAlias(allowedTypeAlias).Id), i, allowedTypeAlias));
+                var allowedType = allowedTypes[i];
+                allowedContentTypes.Add(new ContentTypeSort(new Lazy<int>(() => GetByAlias(allowedType.Name).Id), i, allowedType.Name));
             }
 
-            ct.AllowedContentTypes = allowedTypes;
+            ct.AllowedContentTypes = allowedContentTypes;
+        }
+
+
+        /// <summary>
+        /// Saves content type compositions
+        /// </summary>
+        /// <param name="itemType"></param>
+        public void SaveCompositions(Type itemType)
+        {
+            var attr = itemType.GetCustomAttribute<T>();
+
+            if (attr.CompositionTypes == null || attr.CompositionTypes.Length == 0)
+                return;
+
+            var ct = GetByAlias(itemType.Name);
+
+            foreach (var compositionType in attr.CompositionTypes)
+            {
+                ct.AddContentType(GetByAlias(compositionType.Name));
+            }
+
+
+            Save(ct);
         }
 
 

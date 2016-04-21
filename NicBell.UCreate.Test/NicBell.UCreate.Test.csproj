@@ -311,6 +311,7 @@
     <Compile Include="DocumentTypes\BlogIndex.cs" />
     <Compile Include="DocumentTypes\BlogItem.cs" />
     <Compile Include="DocumentTypes\Home.cs" />
+    <Compile Include="DocumentTypes\TaggedPage.cs" />
     <Compile Include="Extensions\ArchetypeExtensions.cs" />
     <Compile Include="MemberGroups\Staff.cs" />
     <Compile Include="MemberTypes\Employee.cs" />

@@ -7,14 +7,33 @@ using System.Web.Hosting;
 using Umbraco.Core;
 using Umbraco.Core.Configuration;
 using Umbraco.Core.Models;
+using Umbraco.Core.Services;
 
 namespace NicBell.UCreate.Sync
 {
     public class DocTypeSync : BaseTreeContentTypeSync<DocTypeAttribute>
     {
+        /// <summary>
+        /// Service
+        /// </summary>
+        public IContentTypeService Service
+        {
+            get
+            {
+                return ApplicationContext.Current.Services.ContentTypeService;
+            }
+        }
+
+
         public override IContentTypeComposition GetByAlias(string alias)
         {
             return Service.GetContentType(alias);
+        }
+
+
+        public override void Save(IContentTypeBase ct)
+        {
+            Service.Save(ct as IContentType);
         }
 
 
@@ -39,7 +58,7 @@ namespace NicBell.UCreate.Sync
             MapProperties(ct, itemType);
             SetTemplates(ct, itemType, attr.AllowedTemplates, attr.DefaultTemplate);
 
-            Service.Save(ct);
+            Save(ct);
         }
 
 

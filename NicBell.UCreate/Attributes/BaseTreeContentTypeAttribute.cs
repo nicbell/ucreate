@@ -13,13 +13,18 @@ namespace NicBell.UCreate.Attributes
         public bool AllowedAsRoot { get; set; }
 
         /// <summary>
-        /// Item is a container
+        /// Item is a container, enables list view
         /// </summary>
         public bool IsContainer { get; set; }
 
         /// <summary>
-        /// Aliases of allowed types
+        /// Allowed child node types
         /// </summary>
-        public string[] AllowedTypes { get; set; }
+        public Type[] AllowedChildTypes { get; set; }
+
+        /// <summary>
+        /// Composition types
+        /// </summary>
+        public Type[] CompositionTypes { get; set; }
     }
 }
