@@ -32,7 +32,8 @@ Doc types support property inheritance. Here is a list of available [icons](http
     Icon = "icon-zip color-blue",
     AllowedAsRoot = true,
     AllowedTemplates = new[] { "PageWithTitle" },
-    DefaultTemplate = "PageWithTitle")]
+    DefaultTemplate = "PageWithTitle",
+    CompositionTypes = new[] { typeof(TaggedPage) })]
 public class PageWithTitle : BaseDocType
 {
     public PageWithTitle(IPublishedContent content) : base(content)
