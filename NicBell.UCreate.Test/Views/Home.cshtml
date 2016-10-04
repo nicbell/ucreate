@@ -9,7 +9,7 @@
 }
 
 <div class="jumbotron">
-    <h1>@Model.Content.Name</h1>
+    <h1>@Model.Content.Name - @Model.Content.MetaTitle</h1>
     @Html.Raw(TemplateUtilities.ParseInternalLinks(Model.Content.SomeCopy))
 </div>
 
@@ -56,7 +56,12 @@
 </div>
 <p><span class="label label-default">ValueListConverter</span> custom type converter, converts a CSV string into a List of strings.</p>
 <ul>
-    @foreach (var tag in Model.Content.Tags)
+    @{
+        // Get composition page, TODO make this nicer
+        var taggedPage = new TaggedPage(Model.Content);
+    }
+
+    @foreach (var tag in taggedPage.Tags)
     {
         <li>@tag</li>
     }

@@ -43,7 +43,7 @@ namespace NicBell.UCreate.Helpers
         /// <returns></returns>
         public static List<PropertyInfo> GetPropertiesWithAttribute<T>(Type itemType, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, bool inherit = false) where T : Attribute
         {
-            return itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+            return itemType.GetProperties(bindingFlags)
                     .Where(prop => prop.IsDefined(typeof(T), inherit))
                     .ToList();
         }
