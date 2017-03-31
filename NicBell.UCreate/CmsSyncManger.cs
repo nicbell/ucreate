@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace NicBell.UCreate
 {
-    internal class CmsSyncManger
+    public class CmsSyncManger
     {
         private static readonly object Mutex = new object();
         private static bool _synchronized;
 
         /// <summary>
-        /// Add stuff if it isn't added
+        /// Synchronize any Umbraco items that have not yet been created
         /// </summary>
         public static void SynchronizeIfNotSynchronized()
         {
@@ -35,7 +35,7 @@ namespace NicBell.UCreate
         /// <summary>
         /// This looks lame but it means we don't have to go into Umbraco and configure stuff.
         /// </summary>
-        public static void Synchronize()
+        private static void Synchronize()
         {
             var dataSync = new DataTypeSync();
             var mediaSync = new MediaTypeSync();
