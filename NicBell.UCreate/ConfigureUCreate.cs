@@ -25,7 +25,7 @@ namespace NicBell.UCreate
                 return;
 
             //Sync doctypes, mediatypes, datatypes
-            CmsSyncManger.SynchronizeIfNotSynchronized();
+            CmsSyncManger.Synchronize();
         }
     }
 }

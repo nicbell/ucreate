@@ -14,7 +14,7 @@ namespace NicBell.UCreate
         /// <summary>
         /// Synchronize any Umbraco items that have not yet been created
         /// </summary>
-        public static void SynchronizeIfNotSynchronized()
+        public static void Synchronize()
         {
             // avoid immediate locking because it will impact performance
             if (!_synchronized)
@@ -24,7 +24,7 @@ namespace NicBell.UCreate
                     if (!_synchronized)
                     {
                         if (!AssemblyVersionHelper.IsSynced())
-                            Synchronize();
+                            SynchronizeTypes();
                         _synchronized = true;
                     }
                 }
@@ -35,7 +35,7 @@ namespace NicBell.UCreate
         /// <summary>
         /// This looks lame but it means we don't have to go into Umbraco and configure stuff.
         /// </summary>
-        private static void Synchronize()
+        private static void SynchronizeTypes()
         {
             var dataSync = new DataTypeSync();
             var mediaSync = new MediaTypeSync();
