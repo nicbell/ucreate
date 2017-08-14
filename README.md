@@ -144,3 +144,7 @@ Then using the doc types in your views is pretty simple.
 </body>
 </html>
 ```
+
+Contributing
+---
+If you have a fix for something don't be shy, submit a pull request.
