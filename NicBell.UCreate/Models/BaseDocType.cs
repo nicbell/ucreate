@@ -33,7 +33,8 @@ namespace NicBell.UCreate.Models
 
                 //Local links cause stack overflow when accessing value during publish.
                 //Use @Html.Raw(TemplateUtilities.ParseInternalLinks(value)) to resolve these URLs on the template.
-                if (publishedProperty.DataValue is string && (publishedProperty.DataValue as string).Contains("localLink"))
+                if (publishedProperty.DataValue is string &&
+                    ((publishedProperty.DataValue as string).Contains("localLink") || (publishedProperty.DataValue as string).Contains("umb://")))
                 {
                     SetValue(property, publishedProperty.DataValue);
                 }
