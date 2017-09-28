@@ -31,10 +31,13 @@ namespace NicBell.UCreate.Models
                 var alias = property.GetCustomAttribute<PropertyAttribute>(false).Alias;
                 var publishedProperty = content.GetProperty(alias);
 
-                //Local links cause stack overflow when accessing value during publish.
-                //Use @Html.Raw(TemplateUtilities.ParseInternalLinks(value)) to resolve these URLs on the template.
+                // Local links cause stack overflow when accessing value during publish.
+                // Use @Html.Raw(TemplateUtilities.ParseInternalLinks(value)) to resolve these URLs on the template.
+                // Use DataValue when property contains a macro, otherwise this error occurs:
+                //     "Cannot render a macro when there is no current PublishedContentRequest."
                 if (publishedProperty.DataValue is string &&
-                    ((publishedProperty.DataValue as string).Contains("localLink") || (publishedProperty.DataValue as string).Contains("umb://")))
+                    ((publishedProperty.DataValue as string).Contains("localLink") || (publishedProperty.DataValue as string).Contains("umb://") ||
+                     (publishedProperty.DataValue as string).Contains("UMBRACO_MACRO")))
                 {
                     SetValue(property, publishedProperty.DataValue);
                 }
