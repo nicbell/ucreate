@@ -1,4 +1,4 @@
-﻿<div class="umb-editor" ng-controller="Umbraco.PrevalueEditors.IncludePropertiesListViewController">
+<div class="umb-editor" ng-controller="Umbraco.PrevalueEditors.IncludePropertiesListViewController">
     <div class="control-group">
 
         <select ng-model="selectedField">
@@ -20,7 +20,7 @@
                     <td style="width:100px;"></td>
                 </tr>
             </thead>
-            <tbody ui-sortable="sortableOptions">
+            <tbody ui-sortable="sortableOptions" ng-model="model.value">
                 <tr ng-repeat="val in model.value">
                     <td>
                         <i class="icon icon-navigation handle"></i>
