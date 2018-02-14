@@ -297,10 +297,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ArchetypeListConverter.cs" />
     <Compile Include="Converters\ColorPickerConverter.cs" />
-    <Compile Include="Converters\IdListConverter.cs" />
-    <Compile Include="Converters\ValueListConverter.cs" />
     <Compile Include="DataTypes\TagPicker.cs" />
     <Compile Include="DataTypes\BlogPostPicker.cs" />
     <Compile Include="DataTypes\Things.cs" />
@@ -314,7 +311,6 @@
     <Compile Include="MemberTypes\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MediaTypes\FolderWithCover.cs" />
-    <Compile Include="Converters\NiceColorConverter.cs" />
     <Compile Include="DataTypes\NiceColorPicker.cs" />
   </ItemGroup>
   <ItemGroup>
