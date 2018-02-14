@@ -11,7 +11,7 @@
 # version format
 version: "{branch}"
 
-skip_non_tags: false
+skip_non_tags: true
 
 assembly_info:
   patch: true
