@@ -17,7 +17,7 @@ namespace NicBell.UCreate.Test.DataTypes
             {
                 return new Dictionary<string, PreValue> {
                     {"1", new PreValue("Tag1")},
-                    {"2", new PreValue("Tag2 New Name")},
+                    {"2", new PreValue("Tag2")},
                     {"3", new PreValue("Tag3")},
                     {"4", new PreValue("Tag4")}
                 };

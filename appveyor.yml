@@ -9,9 +9,9 @@
 #---------------------------------#
 
 # version format
-version: "{branch}.{build}"
+version: "{branch}"
 
-skip_non_tags: true
+skip_non_tags: false
 
 assembly_info:
   patch: true
