@@ -14,7 +14,7 @@
     <language>en-GB</language>
     <tags>C#,Umbraco</tags>
     <dependencies>
-      <dependency id="UmbracoCms.Core" version="[7.1.4,8)" />
+      <dependency id="UmbracoCms.Core" version="[7.6.0,8)" />
     </dependencies>
   </metadata>
 </package>
