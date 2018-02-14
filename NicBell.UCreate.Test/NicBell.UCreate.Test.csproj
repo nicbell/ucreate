@@ -298,6 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ArchetypeListConverter.cs" />
+    <Compile Include="Converters\ColorPickerConverter.cs" />
     <Compile Include="Converters\IdListConverter.cs" />
     <Compile Include="Converters\ValueListConverter.cs" />
     <Compile Include="DataTypes\TagPicker.cs" />

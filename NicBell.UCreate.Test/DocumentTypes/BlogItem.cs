@@ -1,10 +1,8 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Constants;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Umbraco.Core.Models;
+using Umbraco.Web;
 
 namespace NicBell.UCreate.Test.DocumentTypes
 {
@@ -20,13 +18,19 @@ namespace NicBell.UCreate.Test.DocumentTypes
 
 
         [Property(Alias = "itemTitle", Name = "Item Title", TypeName = PropertyTypes.Textstring, Description = "Title", Mandatory = true, TabName = "Content")]
-        public string ItemTitle { get; set; }
+        public string ItemTitle
+        {
+            get { return Content.GetPropertyValue<string>("itemTitle"); }
+        }
 
         [Property(Alias = "itemDate", Name = "Item Date", TypeName = PropertyTypes.DatePicker, Description = "Date", Mandatory = true, TabName = "Content")]
         public DateTime ItemDate { get; set; }
 
         [Property(Alias = "intro", TypeName = PropertyTypes.Richtexteditor, Description = "Intro", Mandatory = true, TabName = "Content")]
-        public string Intro { get; set; }
+        public string Intro
+        {
+            get { return Content.GetPropertyValue<string>("intro"); }
+        }
 
         [Property(Alias = "body", TypeName = PropertyTypes.Richtexteditor, Description = "Body", Mandatory = true, TabName = "Content")]
         public string Body { get; set; }

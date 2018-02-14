@@ -1,13 +1,8 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Constants;
 using NicBell.UCreate.Models;
-using NicBell.UCreate.Test.Converters;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
 using Umbraco.Core.Models;
+using Umbraco.Web;
 
 namespace NicBell.UCreate.Test.DocumentTypes
 {
@@ -17,9 +12,15 @@ namespace NicBell.UCreate.Test.DocumentTypes
         public Base(IPublishedContent content) : base(content) { }
 
         [Property(Alias = "metaTitle", TypeName = PropertyTypes.Textstring, Name = "Title", Description = "Meta title", Mandatory = true, TabName = "Meta")]
-        public string MetaTitle { get; set; }
+        public string MetaTitle
+        {
+            get { return Content.GetPropertyValue<string>("metaTitle"); }
+        }
 
         [Property(Alias = "metaDescription", TypeName = PropertyTypes.Textstring, Name = "Description", Description = "Meta description", Mandatory = true, TabName = "Meta")]
-        public string MetaDescription { get; set; }
+        public string MetaDescription
+        {
+            get { return Content.GetPropertyValue<string>("metaDescription"); }
+        }
     }
 }

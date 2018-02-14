@@ -1,12 +1,10 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Models;
 using NicBell.UCreate.Test.Converters;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Web;
 using Umbraco.Core.Models;
+using Umbraco.Web;
 
 namespace NicBell.UCreate.Test.DocumentTypes
 {
@@ -15,8 +13,11 @@ namespace NicBell.UCreate.Test.DocumentTypes
     {
         public TaggedPage(IPublishedContent content) : base(content) { }
 
-        [TypeConverter(typeof(ValueListConverter))]
+        //[TypeConverter(typeof(ValueListConverter))]
         [Property(Alias = "tags", TypeName = "Tag Picker", Name = "Tags", Description = "Tags", Mandatory = false, TabName = "Meta")]
-        public List<string> Tags { get; set; }
+        public IEnumerable<string> Tags
+        {
+            get { return Content.GetPropertyValue<IEnumerable<string>>("tags"); }
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Web;
 
 namespace NicBell.UCreate.Models
 {
@@ -14,7 +15,7 @@ namespace NicBell.UCreate.Models
         public BaseDocType(IPublishedContent content)
             : base(content)
         {
-            SetValues(content);
+            //if(content != null) SetValues(content);
         }
 
 
