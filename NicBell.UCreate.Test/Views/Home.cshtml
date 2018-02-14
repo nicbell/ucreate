@@ -68,21 +68,10 @@
 </ul>
 
 <div class="page-header">
-    <h3>Promoted Posts Using Lazy type</h3>
+    <h3>Promoted Posts</h3>
 </div>
 <ul>
-    @foreach (var post in Model.Content.PromotedPosts.Value)
-    {
-        <li><a href="@post.Url">@post.Name</a></li>
-    }
-</ul>
-
-
-<div class="page-header">
-    <h3>Promoted Posts Using helpers</h3>
-</div>
-<ul>
-    @foreach (var post in Model.Content.PromotedPostsIds.Select(x => new BlogItem(x)))
+    @foreach (var post in Model.Content.PromotedPosts)
     {
         <li><a href="@post.Url">@post.Name</a></li>
     }

@@ -10,12 +10,13 @@ using Umbraco.Web;
 
 namespace NicBell.UCreate.Models
 {
+    [Obsolete]
     public abstract class BaseDocType : PublishedContentModel
     {
         public BaseDocType(IPublishedContent content)
             : base(content)
         {
-            //if(content != null) SetValues(content);
+            if(content != null) SetValues(content);
         }
 
 

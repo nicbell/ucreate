@@ -24,7 +24,10 @@ namespace NicBell.UCreate.Test.DocumentTypes
         }
 
         [Property(Alias = "itemDate", Name = "Item Date", TypeName = PropertyTypes.DatePicker, Description = "Date", Mandatory = true, TabName = "Content")]
-        public DateTime ItemDate { get; set; }
+        public DateTime ItemDate
+        {
+            get { return Content.GetPropertyValue<DateTime>("itemDate"); }
+        }
 
         [Property(Alias = "intro", TypeName = PropertyTypes.Richtexteditor, Description = "Intro", Mandatory = true, TabName = "Content")]
         public string Intro
@@ -33,6 +36,9 @@ namespace NicBell.UCreate.Test.DocumentTypes
         }
 
         [Property(Alias = "body", TypeName = PropertyTypes.Richtexteditor, Description = "Body", Mandatory = true, TabName = "Content")]
-        public string Body { get; set; }
+        public string Body
+        {
+            get { return Content.GetPropertyValue<string>("body"); }
+        }
     }
 }

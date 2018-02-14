@@ -1,12 +1,9 @@
 ﻿using Archetype.Models;
 using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Constants;
-using NicBell.UCreate.Test.Converters;
 using NicBell.UCreate.Test.DataTypes;
 using NicBell.UCreate.Test.Extensions;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using Umbraco.Core.Models;
@@ -27,7 +24,6 @@ namespace NicBell.UCreate.Test.DocumentTypes
             : base(content)
         { }
 
-        //[TypeConverter(typeof(ArchetypeListConverter<Thing>))]
         [Property(Alias = "someThings", Name = "Some Things", TypeName = "Things", TabName = "Things", Mandatory = true)]
         public List<Thing> Things
         {
@@ -40,32 +36,25 @@ namespace NicBell.UCreate.Test.DocumentTypes
             get { return Content.GetPropertyValue<string>("someCopy"); }
         }
 
-        [TypeConverter(typeof(NiceColorConverter))]
+        /// <summary>
+        /// <see cref="Converters.ColorPickerConverter"/>  
+        /// </summary>
         [Property(Alias = "someColor", Name = "Some Color", TypeName = "Nice Color Picker", TabName = "Content", Mandatory = true)]
-        public Color SomeColor {
+        public Color SomeColor
+        {
             get { return Content.GetPropertyValue<Color>("someColor"); }
         }
 
-        //[TypeConverter(typeof(RelatedLinksConverter))]
         [Property(Alias = "someLinks", Name = "Some Links", TypeName = PropertyTypes.RelatedLinks, TabName = "Content", Mandatory = true)]
-        public RelatedLinks SomeLinks {
+        public RelatedLinks SomeLinks
+        {
             get { return Content.GetPropertyValue<RelatedLinks>("someLinks"); }
         }
 
-        //[TypeConverter(typeof(IdListConverter))]
         [Property(Alias = "promotedPosts", Name = "Promoted Posts", TypeName = "Blog Post Picker", TabName = "Promoted Posts", Mandatory = false)]
-        public List<IPublishedContent> PromotedPostsIds
+        public List<BlogItem> PromotedPosts
         {
-            get { return Content.GetPropertyValue<List<IPublishedContent>>("promotedPosts"); }
-        }
-
-
-        /// <summary>
-        /// Get the data when we need otherwise we may end up querying everything at once and end up with a chicken and egg.
-        /// </summary>
-        public Lazy<List<BlogItem>> PromotedPosts
-        {
-            get { return new Lazy<List<BlogItem>>(() => PromotedPostsIds.Select(x => new BlogItem(x)).ToList()); }
+            get { return Content.GetPropertyValue<List<IPublishedContent>>("promotedPosts").Select(x => new BlogItem(x)).ToList(); }
         }
     }
 }

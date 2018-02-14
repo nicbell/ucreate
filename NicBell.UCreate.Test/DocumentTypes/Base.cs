@@ -1,13 +1,13 @@
 ﻿using NicBell.UCreate.Attributes;
 using NicBell.UCreate.Constants;
-using NicBell.UCreate.Models;
 using Umbraco.Core.Models;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 
 namespace NicBell.UCreate.Test.DocumentTypes
 {
     [DocType(Name = "Base")]
-    public class Base : BaseDocType
+    public class Base : PublishedContentModel
     {
         public Base(IPublishedContent content) : base(content) { }
 
