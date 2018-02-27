@@ -1,4 +1,4 @@
-UCreate [![Build status](https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q?svg=true)](https://ci.appveyor.com/project/nicbell/ucreate) [![Nuget](https://img.shields.io/nuget/dt/ucreate.svg)](https://www.nuget.org/packages/UCreate/)
+UCreate [![Build status](https://ci.appveyor.com/api/projects/status/60v4v2cbl6nxmf0q?svg=true)](https://ci.appveyor.com/project/nicbell/ucreate) [![Nuget](https://buildstats.info/nuget/ucreate)](https://www.nuget.org/packages/UCreate/)
 =======
 
 Create doc types, media types, data types, member types and member groups for Umbraco 7 using a code-first approach. Inspired by [USiteBuilder](https://github.com/spopovic/uSiteBuilder).
@@ -32,14 +32,23 @@ Doc types support property inheritance. Here is a list of available [icons](http
     Icon = "icon-zip color-blue",
     AllowedAsRoot = true,
     AllowedTemplates = new[] { "PageWithTitle" },
-    DefaultTemplate = "PageWithTitle")]
-public class PageWithTitle : BaseDocType
+    DefaultTemplate = "PageWithTitle",
+    CompositionTypes = new[] { typeof(TaggedPage) })]
+public class PageWithTitle : PublishedContentModel
 {
     public PageWithTitle(IPublishedContent content) : base(content)
     { }
 
     [Property(Alias = "heading", TypeName = PropertyTypes.Textstring, Description = "Heading for page", Mandatory = true, TabName = "Content")]
-    public string Heading { get; set; }
+    public string Heading {
+        get { return Content.GetPropertyValue<string>("heading"); }
+    }
+
+    [Property(Alias = "itemDate", Name = "Item Date", TypeName = PropertyTypes.DatePicker, Description = "Date", Mandatory = true, TabName = "Content")]
+    public DateTime ItemDate
+    {
+        get { return Content.GetPropertyValue<DateTime>("itemDate"); }
+    }
 }
 ```
 
@@ -51,7 +60,7 @@ Media types support property inheritance.
     Icon = "icon-folder color-blue",
     AllowedAsRoot = true,
     IsContainer = true,
-    AllowedTypes = new[] { "FolderWithCover", "Image" })]
+    AllowedChildTypes = new[] { typeof(FolderWithCover), typeof(Image) })]
 public class FolderWithCover
 {
     [Property(Alias = "coverImage", TypeName = PropertyTypes.MediaPicker, Description = "Cover image.", Mandatory = true)]
@@ -95,7 +104,7 @@ public class Employee
     [MemberProperty(Alias = "jobTitle", TypeName = PropertyTypes.Textstring, Description = "Employee's job title", Mandatory = true, TabName = "Job Details", CanEdit = true, ShowOnProfile = true)]
     public string JobTitle { get; set; }
 
-    [MemberProperty(Alias = "jobDescription", TypeName = PropertyTypes.Textboxmultiple, Description = "Employee's job description", Mandatory = false, TabName = "Job Details", CanEdit = true, ShowOnProfile = false)]
+    [MemberProperty(Alias = "jobDescription", TypeName = PropertyTypes.Textarea, Description = "Employee's job description", Mandatory = false, TabName = "Job Details", CanEdit = true, ShowOnProfile = false)]
     public string JobDescription { get; set; }
 
     [MemberProperty(Alias = "profilePicture", TypeName = PropertyTypes.MediaPicker, Description = "Admin profile picture", Mandatory = false, CanEdit = true, ShowOnProfile = true)]
@@ -143,3 +152,7 @@ Then using the doc types in your views is pretty simple.
 </body>
 </html>
 ```
+
+Contributing
+---
+If you have a fix for something don't be shy, submit a pull request.
