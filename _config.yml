@@ -1,0 +1,8 @@
+title: UCreate
+description: Create strongly typed views and generate DocTypes, DataTypes and MediaTypes for Umbraco 7 using a code-first approach.
+google_analytics: UA-9837227-5
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
