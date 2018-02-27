@@ -10,7 +10,7 @@
 
 <div class="jumbotron">
     <h1>@Model.Content.Name - @Model.Content.MetaTitle</h1>
-    @Html.Raw(TemplateUtilities.ParseInternalLinks(Model.Content.SomeCopy))
+    @Html.Raw(TemplateUtilities.ParseInternalLinks(Model.Content.SomeCopy, Umbraco.UrlProvider))
 </div>
 
 <div class="page-header">
@@ -20,19 +20,19 @@
 <div class="page-header">
     <h3>Some Things</h3>
 </div>
-<p><span class="label label-default">ArchetypeListConverter</span> custom type converter, converts Archetype content into a strongly typed list.</p>
+<p>Archetype content as a strongly typed list.</p>
 <dl>
     @foreach (var thing in Model.Content.Things)
     {
         <dt>@thing.Name</dt>
-        <dd>@Html.Raw(TemplateUtilities.ParseInternalLinks(thing.Description))</dd>
+        <dd>@Html.Raw(TemplateUtilities.ParseInternalLinks(thing.Description, Umbraco.UrlProvider))</dd>
     }
 </dl>
 
 <div class="page-header">
     <h3>Some Color</h3>
 </div>
-<p><span class="label label-default">NiceColorConverter</span> custom type converter, splits color HEX into RGB.</p>
+<p><span class="label label-default">ColorPickerConverter</span>, splits color HEX into RGB.</p>
 <ul>
     <li>Red: @Model.Content.SomeColor.R</li>
     <li>Green: @Model.Content.SomeColor.G</li>
@@ -43,7 +43,7 @@
 <div class="page-header">
     <h3>Some Links</h3>
 </div>
-<p><span class="label label-default">RelatedLinksConverter</span> built into UCreate.</p>
+<p>RelatedLinks built-in Umbraco converter.</p>
 <ul>
     @foreach (var link in Model.Content.SomeLinks)
     {
@@ -54,7 +54,7 @@
 <div class="page-header">
     <h3>Tags</h3>
 </div>
-<p><span class="label label-default">ValueListConverter</span> custom type converter, converts a CSV string into a List of strings.</p>
+<p>List of strings from composition page.</p>
 <ul>
     @{
         // Get composition page, TODO make this nicer
@@ -68,21 +68,10 @@
 </ul>
 
 <div class="page-header">
-    <h3>Promoted Posts Using Lazy type</h3>
+    <h3>Promoted Posts</h3>
 </div>
 <ul>
-    @foreach (var post in Model.Content.PromotedPosts.Value)
-    {
-        <li><a href="@post.Url">@post.Name</a></li>
-    }
-</ul>
-
-
-<div class="page-header">
-    <h3>Promoted Posts Using helpers</h3>
-</div>
-<ul>
-    @foreach (var post in Model.Content.PromotedPostsIds.Select(x => new BlogItem(Umbraco.TypedContent(x))))
+    @foreach (var post in Model.Content.PromotedPosts)
     {
         <li><a href="@post.Url">@post.Name</a></li>
     }

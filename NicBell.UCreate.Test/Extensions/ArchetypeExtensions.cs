@@ -1,6 +1,7 @@
 ﻿using Archetype.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -31,6 +32,20 @@ namespace NicBell.UCreate.Test.Extensions
             }
 
             return instance;
+        }
+
+        public static List<T> ToList<T>(this ArchetypeModel model) {
+            var items = new List<T>();
+
+            if (model is ArchetypeModel)
+            {
+                foreach (var fieldset in (model as ArchetypeModel))
+                {
+                    items.Add(fieldset.As<T>());
+                }
+            }
+
+            return items;   
         }
     }
 }

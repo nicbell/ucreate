@@ -34,13 +34,21 @@ Doc types support property inheritance. Here is a list of available [icons](http
     AllowedTemplates = new[] { "PageWithTitle" },
     DefaultTemplate = "PageWithTitle",
     CompositionTypes = new[] { typeof(TaggedPage) })]
-public class PageWithTitle : BaseDocType
+public class PageWithTitle : PublishedContentModel
 {
     public PageWithTitle(IPublishedContent content) : base(content)
     { }
 
     [Property(Alias = "heading", TypeName = PropertyTypes.Textstring, Description = "Heading for page", Mandatory = true, TabName = "Content")]
-    public string Heading { get; set; }
+    public string Heading {
+        get { return Content.GetPropertyValue<string>("heading"); }
+    }
+
+    [Property(Alias = "itemDate", Name = "Item Date", TypeName = PropertyTypes.DatePicker, Description = "Date", Mandatory = true, TabName = "Content")]
+    public DateTime ItemDate
+    {
+        get { return Content.GetPropertyValue<DateTime>("itemDate"); }
+    }
 }
 ```
 

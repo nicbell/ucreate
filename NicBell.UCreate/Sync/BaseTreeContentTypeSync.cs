@@ -1,12 +1,11 @@
 ﻿using NicBell.UCreate.Attributes;
-using NicBell.UCreate.Models;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core;
 using Umbraco.Core.Models;
-using Umbraco.Core.Services;
+using Umbraco.Core.Models.PublishedContent;
 
 namespace NicBell.UCreate.Sync
 {
@@ -26,7 +25,7 @@ namespace NicBell.UCreate.Sync
         /// </summary>
         public override void SyncAll()
         {
-            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(object) || x.BaseType == typeof(BaseDocType));
+            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(object) || x.BaseType == typeof(PublishedContentModel));
 
             foreach (var itemType in firstLevelTypes)
             {
