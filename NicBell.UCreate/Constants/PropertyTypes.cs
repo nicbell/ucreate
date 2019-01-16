@@ -9,6 +9,7 @@ namespace NicBell.UCreate.Constants
     public static class PropertyTypes
     {
         public const string ApprovedColor = "Approved Color";
+        public const string Checkbox = "Checkbox";
         public const string Checkboxlist = "Checkbox list";
         public const string ContentPicker = "Content Picker";
         public const string DatePickerwithtime = "Date Picker with time";
@@ -29,6 +30,7 @@ namespace NicBell.UCreate.Constants
         public const string Textboxmultiple = "Textbox multiple";
         public const string Textarea = "Textarea";
         public const string Textstring = "Textstring";
+        [Obsolete("From Umbraco 7.12 use PropertyTypes.Checkbox")]
         public const string TrueFalse = "True/false";
         public const string Upload = "Upload";
     }
