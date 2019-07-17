@@ -31,6 +31,7 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -302,6 +303,7 @@
     <Compile Include="DataTypes\BlogPostPicker.cs" />
     <Compile Include="DataTypes\Things.cs" />
     <Compile Include="DocumentTypes\Base.cs" />
+    <Compile Include="DocumentTypes\BaseFromPoco.cs" />
     <Compile Include="DocumentTypes\BlogIndex.cs" />
     <Compile Include="DocumentTypes\BlogItem.cs" />
     <Compile Include="DocumentTypes\Home.cs" />
