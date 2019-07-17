@@ -25,7 +25,16 @@ namespace NicBell.UCreate.Sync
         /// </summary>
         public override void SyncAll()
         {
-            var firstLevelTypes = TypesToSync.Where(x => x.BaseType == null || x.BaseType == typeof(object) || x.BaseType == typeof(PublishedContentModel));
+            // Get first level types to sync as a tree:
+            // they could be types that don't inherit from anything,
+            // inherit directly from PublishedContentModel,
+            // inherit from some other POCO that is's a content type
+            Func<Type, bool> isFirstLevelType = x => x.BaseType == null
+                || x.BaseType == typeof(object)
+                || x.BaseType == typeof(PublishedContentModel)
+                || !x.BaseType.GetCustomAttributes().Any(at => at is BaseContentTypeAttribute);
+
+            var firstLevelTypes = TypesToSync.Where(isFirstLevelType);
 
             foreach (var itemType in firstLevelTypes)
             {
